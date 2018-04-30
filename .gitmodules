@@ -10,3 +10,9 @@
 [submodule "3rdparty/vez"]
 	path = 3rdparty/vez
 	url = https://github.com/voidstorm/V-EZ.git
+[submodule "3rdparty/steam-audio"]
+	path = 3rdparty/steam-audio
+	url = https://github.com/voidstorm/steam-audio.git
+[submodule "3rdparty/assimp"]
+	path = 3rdparty/assimp
+	url = https://github.com/voidstorm/assimp.git
