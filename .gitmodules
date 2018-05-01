@@ -22,6 +22,3 @@
 [submodule "3rdparty/bullet3"]
 	path = 3rdparty/bullet3
 	url = https://github.com/voidstorm/bullet3.git
-[submodule "3rdparty/gperftools"]
-	path = 3rdparty/gperftools
-	url = https://github.com/voidstorm/gperftools.git
