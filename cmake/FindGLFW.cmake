@@ -12,15 +12,15 @@
 include(FindPackageHandleStandardArgs)
 include(FindLibraryDebugRelease)
 
-find_path(ASSIMP_INCLUDE_DIR assimp/anim.h)
+find_path(GLWF_INCLUDE_DIR GLWF/glfw3.h)
 
 
-find_library_debug_release(ASSIMP_LIBRARY "assimp-vc140-mt")
+find_library_debug_release(GLWF_LIBRARY "GLWF-vc140-mt")
 
-if(ASSIMP_INCLUDE_DIR)
-    set(ASSIMP_FOUND TRUE)
+if(GLWF_INCLUDE_DIR)
+    set(GLWF_FOUND TRUE)
 endif()
 
-find_package_handle_standard_args(ASSIMP DEFAULT_MSG ASSIMP_INCLUDE_DIR)
+find_package_handle_standard_args(GLWF DEFAULT_MSG GLWF_INCLUDE_DIR)
 
-mark_as_advanced(ASSIMP_INCLUDE_DIR ASSIMP_LIBRARY)
+mark_as_advanced(GLWF_INCLUDE_DIR GLWF_LIBRARY)

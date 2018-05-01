@@ -12,15 +12,15 @@
 include(FindPackageHandleStandardArgs)
 include(FindLibraryDebugRelease)
 
-find_path(ASSIMP_INCLUDE_DIR assimp/anim.h)
+find_path(VEZ_INCLUDE_DIR include/vez.h)
 
 
-find_library_debug_release(ASSIMP_LIBRARY "assimp-vc140-mt")
+find_library_debug_release(VEZ_LIBRARY "VEZ")
 
-if(ASSIMP_INCLUDE_DIR)
-    set(ASSIMP_FOUND TRUE)
+if(VEZ_INCLUDE_DIR)
+    set(VEZ_FOUND TRUE)
 endif()
 
-find_package_handle_standard_args(ASSIMP DEFAULT_MSG ASSIMP_INCLUDE_DIR)
+find_package_handle_standard_args(VEZ DEFAULT_MSG VEZ_INCLUDE_DIR)
 
-mark_as_advanced(ASSIMP_INCLUDE_DIR ASSIMP_LIBRARY)
+mark_as_advanced(VEZ_INCLUDE_DIR VEZ_LIBRARY)
