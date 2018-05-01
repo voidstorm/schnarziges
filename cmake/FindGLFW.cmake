@@ -15,7 +15,7 @@ include(FindLibraryDebugRelease)
 find_path(GLWF_INCLUDE_DIR GLWF/glfw3.h)
 
 
-find_library_debug_release(GLWF_LIBRARY "GLWF-vc140-mt")
+find_library_debug_release(GLWF_LIBRARY "glfw3dll")
 
 if(GLWF_INCLUDE_DIR)
     set(GLWF_FOUND TRUE)
