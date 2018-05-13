@@ -4,6 +4,12 @@
     <Filter Include="base">
       <UniqueIdentifier>{2da6b13b-208a-4978-bed3-dbb697f50591}</UniqueIdentifier>
     </Filter>
+    <Filter Include="gfx">
+      <UniqueIdentifier>{03d37525-2fed-43e7-8ed2-b1003eea443e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gfx\private">
+      <UniqueIdentifier>{28dc38f7-12fd-4c91-bd48-b731c56d65d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\base\dllmain.cpp">
@@ -11,6 +17,12 @@
     </ClCompile>
     <ClCompile Include="src\base\schnarzmaschine.cpp">
       <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\render_context.cpp">
+      <Filter>gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\app.cpp">
+      <Filter>gfx</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -22,6 +34,18 @@
     </ClInclude>
     <ClInclude Include="include\sm\api.h">
       <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="include\sm\functional.hpp">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="include\sm\gfx\render_context.h">
+      <Filter>gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="include\sm\gfx\private\render_context_vk.hpp">
+      <Filter>gfx\private</Filter>
+    </ClInclude>
+    <ClInclude Include="include\sm\gfx\app.h">
+      <Filter>gfx</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
