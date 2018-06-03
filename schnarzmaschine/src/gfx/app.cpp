@@ -1,18 +1,11 @@
 #include "./sm/gfx/app.h"
 #include "GLFW/glfw3.h"
 #include <iostream>
+#include "sm/system_logger.hpp"
 
-std::function<bool(void)> sm::gfx::app::make_app(const AppCreateInfo &app_info, AppCallbackInfo callbacks, AppMainCallbacks appmain) {
-   static auto init = [=]()->bool {
-      return glfwInit() == GLFW_TRUE;
-   };
-   const static bool run_once = init();
-   const static AppCallbackInfo cbi{ std::move(callbacks) };
-   const AppMainCallbacks amc{ std::move(appmain) };
-
-   glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-   auto window = glfwCreateWindow(app_info.width, app_info.height, app_info.title.c_str(), nullptr, nullptr);
-
+namespace detail {
+INLINE void attach_callbacks(GLFWwindow* window, sm::app::AppCallbackInfo callbacks) {
+   static const sm::app::AppCallbackInfo cbi{ std::move(callbacks) };
    //set callbacks
    //keyboard
    glfwSetKeyCallback(window, [](GLFWwindow* window, int key, int scancode, int action, int mods)->void {
@@ -46,14 +39,38 @@ std::function<bool(void)> sm::gfx::app::make_app(const AppCreateInfo &app_info, 
       }
    });
 
+
    glfwSetWindowCloseCallback(window, [](GLFWwindow* window)->void {
       if (cbi.onClose) {
          cbi.onClose();
       }
    });
+}
+}
+
+std::function<bool(void)> sm::app::make_app(const AppCreateInfo &app_info, AppCallbackInfo callbacks, AppMainCallbacks appmain) {
+   SYSTEM_LOG_INFO("-------------------------------------------------------");
+   SYSTEM_LOG_INFO("Schnarzmaschine, version %s", SCHNARZ_VERSION);
+   SYSTEM_LOG_INFO("-------------------------------------------------------");
+   SYSTEM_LOG_INFO("Booting...");
+   static auto init = [=]()->bool {
+      return glfwInit() == GLFW_TRUE;
+   };
+   //init glfw
+   const static bool run_once = init();
+
+   const AppMainCallbacks amc{ std::move(appmain) };
+   //create window
+   glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+   auto window = glfwCreateWindow(app_info.width, app_info.height, app_info.title.c_str(), nullptr, nullptr);
+   //attach callbacks
+   detail::attach_callbacks(window, callbacks);
+   
+   //returns main loop function
    auto lastTime = std::chrono::high_resolution_clock::now();
    auto now = std::chrono::high_resolution_clock::now();
    return [=]() mutable -> bool {
+      //start application main loop
       if (amc.init) {
          amc.init();
       }

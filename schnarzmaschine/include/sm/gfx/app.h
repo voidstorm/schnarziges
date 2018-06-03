@@ -6,7 +6,7 @@
 #include <chrono>
 #include <thread>
 
-namespace sm::gfx::app {
+namespace sm::app {
 
 struct AppCreateInfo {
    const std::string title = "app";

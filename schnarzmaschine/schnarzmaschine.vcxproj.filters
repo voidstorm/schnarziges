@@ -47,5 +47,17 @@
     <ClInclude Include="include\sm\gfx\app.h">
       <Filter>gfx</Filter>
     </ClInclude>
+    <ClInclude Include="include\sm\logger.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="include\sm\scoped_timer.hpp">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="include\sm\scoped_wait_timer.hpp">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="include\sm\system_logger.hpp">
+      <Filter>base</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

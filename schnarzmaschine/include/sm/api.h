@@ -15,8 +15,10 @@
 #define V(x) 
 #endif
 
- 
-
+#ifdef INLINE
+#undef INLINE
+#endif
+#define INLINE __forceinline
 
 #ifdef _WIN32
 #pragma warning( disable : 4251 )
