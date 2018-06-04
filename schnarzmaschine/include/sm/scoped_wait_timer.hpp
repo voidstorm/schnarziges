@@ -2,7 +2,7 @@
 #include <chrono>
 #include <functional>
 
-namespace sm::util {
+namespace sm::time {
 //Waits the remaining time before going out of scope and then 
 //calls the callback and returns elapsed time.
 //Default wait mode is yield. For durations < 2ms one should use wait mode spin.

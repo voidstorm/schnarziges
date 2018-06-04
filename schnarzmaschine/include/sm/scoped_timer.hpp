@@ -2,7 +2,11 @@
 #include <chrono>
 #include <functional>
 
-namespace sm::util {
+namespace sm::time {
+
+using fmilliseconds = std::chrono::duration<float, std::milli>;
+using dmilliseconds = std::chrono::duration<double, std::milli>;
+
 //------------------------------------------------------------------------------------------------
 //Executes a callback when going out of scope that returns elapsed time.
 template < typename T = std::chrono::milliseconds>

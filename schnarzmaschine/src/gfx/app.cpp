@@ -3,6 +3,8 @@
 #include <iostream>
 #include "sm/system_logger.hpp"
 
+using namespace sm::fn;
+
 namespace detail {
 INLINE void attach_callbacks(GLFWwindow* window, sm::app::AppCallbackInfo callbacks) {
    static const sm::app::AppCallbackInfo cbi{ std::move(callbacks) };
@@ -80,7 +82,7 @@ std::function<bool(void)> sm::app::make_app(const AppCreateInfo &app_info, AppCa
          amc.main(now - lastTime);
          lastTime = now;
          now = std::chrono::high_resolution_clock::now();
-      }
+      }     
       if (amc.close) {
          amc.close();
       }

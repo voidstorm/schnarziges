@@ -26,6 +26,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\sm\api.h" />
+    <ClInclude Include="include\sm\command_queue.hpp" />
     <ClInclude Include="include\sm\functional.hpp" />
     <ClInclude Include="include\sm\gfx\private\render_context_vk.hpp" />
     <ClInclude Include="include\sm\gfx\render_context.h" />

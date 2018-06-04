@@ -59,5 +59,8 @@
     <ClInclude Include="include\sm\system_logger.hpp">
       <Filter>base</Filter>
     </ClInclude>
+    <ClInclude Include="include\sm\command_queue.hpp">
+      <Filter>base</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

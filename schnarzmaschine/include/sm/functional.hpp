@@ -106,3 +106,11 @@ INLINE Collection filter(Collection col, Predicate predicate) {
 //      return helper();
 //   };
 //}
+
+//sm::fn::repeat(20, [=](int c) {
+//   std::cout << "hello" << c << std::endl;
+//});
+//
+//sm::fn::repeat(20, [=](const int i)->int {return i / 2; }, [=](int c) {
+//   std::cout << "hello" << c << std::endl;
+//});
