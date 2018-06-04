@@ -2,10 +2,11 @@
 #include <any>
 #include <optional>
 #include <functional>
-#include <queue>
+#include <deque>
 #include <future>
 #include <atomic>
 #include <thread>
+#include <algorithm>
 
 #include "api.h"
 #include "functional.hpp"
@@ -36,7 +37,19 @@ public:
       auto local_task{ std::move(task) };
       auto f = local_task.get_future();
       while (m_busy.test_and_set(std::memory_order_acquire));
-      m_commands_push->push(std::move(local_task));
+      m_commands_push->push_back(std::move(local_task));
+      m_waiting_for_work.clear(std::memory_order_release);
+      m_busy.clear(std::memory_order_release);
+      return std::move(f);
+   }
+
+   //---------------------------------------------------------------------------------------
+   template<typename Container>
+   std::vector<std::future<std::any>> submit(Container &tasks) {
+      std::vector<std::future<std::any>> f;
+      std::transform(tasks.begin(), tasks.end(), std::back_inserter(f), [&](QueueTask &elem)->auto&& {return std::move(elem.get_future()); });
+      while (m_busy.test_and_set(std::memory_order_acquire));
+      m_commands_push->insert(m_commands_push->begin(), tasks.begin(), tasks.end());
       m_waiting_for_work.clear(std::memory_order_release);
       m_busy.clear(std::memory_order_release);
       return std::move(f);
@@ -61,7 +74,7 @@ private:
       while (!m_commands_pop->empty()) {
          auto &m = m_commands_pop->front();
          m();
-         m_commands_pop->pop();
+         m_commands_pop->pop_front();
       }
    }
 
@@ -71,14 +84,12 @@ private:
    }
 
 
-   std::queue<QueueTask> m_commands0;
-   std::queue<QueueTask> m_commands1;
-   std::queue<QueueTask> *m_commands_push;
-   std::queue<QueueTask> *m_commands_pop;
+   std::deque<QueueTask> m_commands0;
+   std::deque<QueueTask> m_commands1;
+   std::deque<QueueTask> *m_commands_push;
+   std::deque<QueueTask> *m_commands_pop;
    std::atomic_flag m_busy = ATOMIC_FLAG_INIT;
    std::atomic_flag m_waiting_for_work = ATOMIC_FLAG_INIT;
-   bool m_false = false;
-   friend class ThreadContext;
 };
 
 

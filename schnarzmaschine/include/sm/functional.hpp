@@ -51,6 +51,7 @@ INLINE Collection map(Collection col, unop op) {
    return col;
 }
 
+
 template <typename Collection, typename binop>
 INLINE Collection zip(Collection fc, Collection sc, binop op) {
    std::transform(fc.begin(), fc.end(), sc.begin(), fc.begin(), op);
