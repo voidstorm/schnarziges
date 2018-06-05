@@ -12,6 +12,18 @@
 #include "api.h"
 #include "functional.hpp"
 
+//SAMPLE
+//-----------------------------------------------------------------------------
+//sm::thread::CommandQueue<> q;
+//sm::thread::CommandQueue<>::CommandBuffer::type tasks;
+//
+//
+//tasks.emplace_back([argc]()->std::any {return (argc); });
+//tasks.emplace_back([argc]()->std::any {return (argc); });
+//tasks.emplace_back([argc]()->std::any {return (argc); });
+//
+//q.submit(std::move(tasks));
+
 namespace sm::thread {
 
 template<typename Rt=std::any, typename Arg=void, typename... Args>
