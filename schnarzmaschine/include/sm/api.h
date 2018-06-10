@@ -4,7 +4,7 @@
 #define SCHNARZ_VERSION "0.1.1.1" //major, minor, patch, build
 
 #define LOGGING_ON
-
+#define SM_TIMING 1
 
 #ifdef _DEBUG
 #include <iostream>

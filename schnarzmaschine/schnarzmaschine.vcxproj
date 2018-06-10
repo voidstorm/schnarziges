@@ -32,10 +32,12 @@
     <ClInclude Include="include\sm\gfx\render_context.h" />
     <ClInclude Include="include\sm\gfx\app.h" />
     <ClInclude Include="include\sm\logger.h" />
+    <ClInclude Include="include\sm\macro_util.hpp" />
     <ClInclude Include="include\sm\schnarzmaschine.h" />
     <ClInclude Include="include\sm\scoped_timer.hpp" />
     <ClInclude Include="include\sm\scoped_wait_timer.hpp" />
     <ClInclude Include="include\sm\system_logger.hpp" />
+    <ClInclude Include="include\sm\thread_context.hpp" />
     <ClInclude Include="src\base\targetver.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

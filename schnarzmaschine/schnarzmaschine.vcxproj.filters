@@ -62,5 +62,11 @@
     <ClInclude Include="include\sm\command_queue.hpp">
       <Filter>base</Filter>
     </ClInclude>
+    <ClInclude Include="include\sm\thread_context.hpp">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="include\sm\macro_util.hpp">
+      <Filter>base</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

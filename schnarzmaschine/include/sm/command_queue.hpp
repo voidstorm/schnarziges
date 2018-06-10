@@ -1,13 +1,9 @@
 #pragma once
-#include <any>
-#include <optional>
-#include <functional>
-#include <deque>
+
+#include <vector>
 #include <future>
 #include <atomic>
 #include <thread>
-#include <algorithm>
-#include <type_traits>
 
 #include "api.h"
 #include "functional.hpp"
@@ -24,13 +20,17 @@
 //
 //q.submit(std::move(tasks));
 
-namespace sm::thread {
+#define SM_INIT_CMD_QUEUE_SIZE 1024
 
-template<typename Rt=std::any, typename Arg=void, typename... Args>
+namespace sm::thread {
+template<typename Rt, typename Arg, typename... Args> class ThreadContext;
+
+template<typename Rt = std::any, typename Arg = void, typename... Args>
 class CommandQueue final {
+
 public:
    struct QueueTask {
-      using type= std::packaged_task<Rt(Arg, Args...)>;
+      using type = std::packaged_task<Rt(Arg, Args...)>;
    };
 
    struct CommandBuffer {
@@ -42,6 +42,8 @@ public:
       m_waiting_for_work.test_and_set(std::memory_order_acquire);
       m_commands_push = &m_commands0;
       m_commands_pop = &m_commands1;
+      m_commands_push->reserve(SM_INIT_CMD_QUEUE_SIZE);
+      m_commands_pop->reserve(SM_INIT_CMD_QUEUE_SIZE);
    }
 
    //---------------------------------------------------------------------------------------
@@ -82,6 +84,7 @@ public:
    }
 
 private:
+
    //---------------------------------------------------------------------------------------
    void swap() {
       while (m_busy.test_and_set(std::memory_order_acquire));
@@ -92,11 +95,10 @@ private:
    //---------------------------------------------------------------------------------------
    void process_all_commands(Args&&... args) {
       swap();
-      while (!m_commands_pop->empty()) {
-         auto &m = m_commands_pop->front();
-         m(std::forward<Args>(args)...);
-         m_commands_pop->pop_front();
+      for (auto &cmd : *m_commands_pop) {
+         cmd(std::forward<Args>(args)...);
       }
+      m_commands_pop->clear();
    }
 
    //---------------------------------------------------------------------------------------
@@ -105,12 +107,14 @@ private:
    }
 
 
-   std::deque<typename QueueTask::type> m_commands0;
-   std::deque<typename QueueTask::type> m_commands1;
-   std::deque<typename QueueTask::type> *m_commands_push;
-   std::deque<typename QueueTask::type> *m_commands_pop;
+   std::vector<typename QueueTask::type> m_commands0;
+   std::vector<typename QueueTask::type> m_commands1;
+   std::vector<typename QueueTask::type> *m_commands_push;
+   std::vector<typename QueueTask::type> *m_commands_pop;
    std::atomic_flag m_busy = ATOMIC_FLAG_INIT;
    std::atomic_flag m_waiting_for_work = ATOMIC_FLAG_INIT;
+
+   template<typename Rt, typename Arg, typename... Args> friend class sm::thread::ThreadContext;
 };
 
 
