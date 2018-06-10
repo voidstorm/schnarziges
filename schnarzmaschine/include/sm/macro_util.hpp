@@ -28,34 +28,44 @@
 
 #define MEMBER_LIST(...) EXPAND(VFUNC(MEMBER_LIST, __VA_ARGS__))
 
-#define GET_NAME(nAmE,tYpE,vAlUe) nAmE
-#define GET_TYPE(nAmE,tYpE,vAlUe) tYpE
-#define GET_VALUE(nAmE,tYpE,vAlUe) vAlUe
+#define SM_GET_NAME(nAmE,tYpE,vAlUe) nAmE
+#define SM_GET_TYPE(nAmE,tYpE,vAlUe) tYpE
+#define SM_GET_VALUE(nAmE,tYpE,vAlUe) vAlUe
 
-#define DECLARE_ENUM(pRiVates) \
+#define SM_DECLARE_ENUM(pRiVates) \
     enum PrivateIdx { \
-        pRiVates(GET_NAME) \
+        pRiVates(SM_GET_NAME) \
     };
 
-#define DECLARE_PRIVATE_GETTER() \
+#define SM_DECLARE_PRIVATE_GETTER() \
 template<int M> \
 auto get() const { \
    return std::get<M>(m_private_members); \
 } \
 
-#define DECLARE_PRIVATE_SETTER() \
+#define SM_DECLARE_PRIVATE_SETTER() \
 template<int M, typename ARG> \
 void set(const ARG &value) { \
    std::get<M>(m_private_members)=value; \
 } \
 
-#define DECLARE_PRIVATE_TUPLE(pRiVates) std::tuple<pRiVates(GET_TYPE)> m_private_members{pRiVates(GET_VALUE)};
+#define SM_DECLARE_PRIVATE_TUPLE(pRiVates) std::tuple<pRiVates(SM_GET_TYPE)> m_private_members{pRiVates(SM_GET_VALUE)};
 
-#define DECLARE_PRIVATE_MEMBERS(pRiVates) \
+#define SM_DECLARE_PRIVATE_MEMBERS(pRiVates) \
     public: \
-        DECLARE_ENUM(pRiVates) \
+        SM_DECLARE_ENUM(pRiVates) \
     private: \
-        DECLARE_PRIVATE_TUPLE(pRiVates)
+        SM_DECLARE_PRIVATE_TUPLE(pRiVates)
 
-//#define MEMBER(MEM) MEM
-//#define DECLARE_PRIVATES(...) EXPAND(DECLARE_MEMBERS(__VA_ARGS__))
+#define SM_DECLARE_PRIVATE_MEMBER_ITER() \
+   auto begin() { \
+      return sm::fn::tuple_iterator{ m_private_members, 0 }; \
+   } \
+   auto end() { \
+      return sm::fn::tuple_iterator{ m_private_members, std::tuple_size_v<decltype(m_private_members)> }; \
+   } \
+\
+   auto operator[](std::size_t i) { \
+      return sm::fn::runtime_get(m_private_members, i); \
+   } \
+
