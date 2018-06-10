@@ -30,7 +30,9 @@
 
 #define SM_GET_NAME(nAmE,tYpE,vAlUe) nAmE
 #define SM_GET_TYPE(nAmE,tYpE,vAlUe) tYpE
+#define SM_GET_TYPE_WITHFLAG(nAmE,tYpE,vAlUe) std::tuple<bool, tYpE>
 #define SM_GET_VALUE(nAmE,tYpE,vAlUe) vAlUe
+#define SM_GET_VALUE_WITHFLAG(nAmE,tYpE,vAlUe) std::tuple(true, vAlUe)
 
 #define SM_DECLARE_ENUM(pRiVates) \
     enum PrivateIdx { \
@@ -50,12 +52,20 @@ void set(const ARG &value) { \
 } \
 
 #define SM_DECLARE_PRIVATE_TUPLE(pRiVates) std::tuple<pRiVates(SM_GET_TYPE)> m_private_members{pRiVates(SM_GET_VALUE)};
+#define SM_DECLARE_PRIVATE_TUPLE_WITHFLAG(pRiVates) std::tuple<pRiVates(SM_GET_TYPE_WITHFLAG)> m_private_members{pRiVates(SM_GET_VALUE_WITHFLAG)};
 
 #define SM_DECLARE_PRIVATE_MEMBERS(pRiVates) \
     public: \
         SM_DECLARE_ENUM(pRiVates) \
     private: \
         SM_DECLARE_PRIVATE_TUPLE(pRiVates)
+
+#define SM_DECLARE_PRIVATE_MEMBERS_WITHFLAG(pRiVates) \
+    public: \
+        SM_DECLARE_ENUM(pRiVates) \
+    private: \
+        SM_DECLARE_PRIVATE_TUPLE_WITHFLAG(pRiVates)
+
 
 #define SM_DECLARE_PRIVATE_MEMBER_ITER() \
    auto begin() { \
