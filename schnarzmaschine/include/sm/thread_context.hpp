@@ -14,6 +14,11 @@
 //tasks.emplace_back([argc]()->std::any { std::cout << "3" << std::endl; return (6); });
 //
 //auto results = q.submit(std::move(tasks));
+////
+//sm::thread::CommandQueue<>::QueueTask::type t([argc](void)->std::any { std::cout << "1" << std::endl; return (4); });
+//
+//tc.get_command_queue().submit(std::move(t));
+//tc.request_exit().get();
 //
 //sm::fn::for_each(results, [](auto& f) {std::cout << std::any_cast<int>(f.get()) << std::endl; });
 
@@ -65,7 +70,7 @@ public:
          if (flags.use_mapping) {
             sm::thread::SetThreadMapping(flags.mapping);
          }
-         while (m_running.load(std::memory_order::memory_order_acquire)) {
+         while (m_running) {
             {
 #ifdef SM_TIMING
                sm::time::ScopedTimer<std::chrono::nanoseconds> sc([this](const std::chrono::high_resolution_clock::duration &d)->void {
@@ -73,7 +78,7 @@ public:
                });
 #endif
                //can take a context param, e.g. the opengl or thread context.
-               while (m_work_items.is_waiting_for_work() && flags.wait_for_work) {
+               while (m_work_items.is_waiting_for_work() && flags.wait_for_work && m_running) {
                   std::this_thread::yield();
                }
                m_work_items.process_all_commands();
@@ -96,14 +101,15 @@ public:
       request_exit();
    }
 
-   void request_exit() {
-      m_running.store(false, std::memory_order::memory_order_release);
-      if (m_work_thread->joinable()) {
-         m_work_thread->join();
-      }
+   auto request_exit() {
+      get_command_queue().submit(sm::thread::CommandQueue<Rt, Arg, Args...>::QueueTask::type([this](void)->std::any { m_running= false; return Rt(); }));
+      return std::async(std::launch::async, [this]()->void {
+         if (m_work_thread->joinable()) {
+            m_work_thread->join();
+         }});
    }
 
-   sm::thread::CommandQueue<Rt, Arg, Args...>& get_command_queue() {
+   const sm::thread::CommandQueue<Rt, Arg, Args...>& get_command_queue() {
       return m_work_items;
    }
 
@@ -114,7 +120,7 @@ public:
 private:
    sm::thread::CommandQueue<Rt, Arg, Args...> m_work_items;
    std::unique_ptr<std::thread> m_work_thread;
-   std::atomic_bool m_running = true;
+   bool m_running = true;
    std::atomic<std::chrono::high_resolution_clock::duration> m_last_duration;
 };
 }

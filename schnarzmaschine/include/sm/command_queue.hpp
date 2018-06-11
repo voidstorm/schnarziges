@@ -37,6 +37,7 @@ public:
       using type = std::vector<typename QueueTask::type>;
    };
 
+
    //---------------------------------------------------------------------------------------
    CommandQueue() {
       m_waiting_for_work.test_and_set(std::memory_order_acquire);
@@ -54,16 +55,6 @@ public:
    CommandQueue& operator=(const CommandQueue&) = delete;
 
    //---------------------------------------------------------------------------------------
-   std::future<std::any> submit(QueueTask &&task) {
-      auto f = task.get_future();
-      while (m_busy.test_and_set(std::memory_order_acquire));
-      m_commands_push->push_back(std::move(task));
-      m_waiting_for_work.clear(std::memory_order_release);
-      m_busy.clear(std::memory_order_release);
-      return std::move(f);
-   }
-
-   //---------------------------------------------------------------------------------------
    //this is a sink function
    template<typename Container>
    auto submit(Container &&tasks)->std::vector<std::future<Rt>> {
@@ -79,7 +70,17 @@ public:
    }
 
    //---------------------------------------------------------------------------------------
-   size_t get_size() {
+   std::future<std::any> submit(typename QueueTask::type &&task) {
+      auto f = task.get_future();
+      while (m_busy.test_and_set(std::memory_order_acquire));
+      m_commands_push->push_back(std::move(task));
+      m_waiting_for_work.clear(std::memory_order_release);
+      m_busy.clear(std::memory_order_release);
+      return std::move(f);
+   }
+
+   //---------------------------------------------------------------------------------------
+   size_t get_size() const {
       return m_commands_push->size();
    }
 
@@ -102,7 +103,7 @@ private:
    }
 
    //---------------------------------------------------------------------------------------
-   bool is_waiting_for_work() {
+   bool is_waiting_for_work() const {
       return m_waiting_for_work.test_and_set(std::memory_order_acquire);
    }
 

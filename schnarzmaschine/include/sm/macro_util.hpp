@@ -28,11 +28,11 @@
 
 #define MEMBER_LIST(...) EXPAND(VFUNC(MEMBER_LIST, __VA_ARGS__))
 
-#define SM_GET_NAME(nAmE,tYpE,vAlUe) nAmE
-#define SM_GET_TYPE(nAmE,tYpE,vAlUe) tYpE
-#define SM_GET_TYPE_WITHFLAG(nAmE,tYpE,vAlUe) std::tuple<bool, tYpE>
-#define SM_GET_VALUE(nAmE,tYpE,vAlUe) vAlUe
-#define SM_GET_VALUE_WITHFLAG(nAmE,tYpE,vAlUe) std::tuple(true, vAlUe)
+#define SM_GET_NAME(tYpE,nAmE,vAlUe) nAmE
+#define SM_GET_TYPE(tYpE,nAmE,vAlUe) tYpE
+#define SM_GET_TYPE_WITHFLAG(tYpE,nAmE,vAlUe) std::tuple<bool, tYpE>
+#define SM_GET_VALUE(tYpE,nAmE,vAlUe) vAlUe
+#define SM_GET_VALUE_WITHFLAG(tYpE,nAmE,vAlUe) std::tuple(true, vAlUe)
 
 #define SM_DECLARE_ENUM(pRiVates) \
     enum PrivateIdx { \
