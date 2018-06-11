@@ -23,6 +23,12 @@ struct get_template_type<C<T>> {
    using type = T;
 };
 
+template <typename E>
+constexpr auto enum_cast(E e) noexcept
+{
+    return static_cast<std::underlying_type_t<E>>(e);
+}
+   
 template<typename Function, typename... Arguments>
 INLINE auto partial(Function &&func, Arguments&&... args) {
    return [=](auto&&... rest) {
