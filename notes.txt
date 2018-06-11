@@ -2,3 +2,6 @@ My Schnarzpad
 
 -Add stream ops to tuple class stuff
 -Make ThreadContext::request_exit queue a command an return a future instead. 
+
+
+-https://content.pivotal.io/blog/all-evidence-points-to-oop-being-bullshit
