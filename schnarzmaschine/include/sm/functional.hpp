@@ -202,19 +202,22 @@ public:
    }
 };
 
-template <class ... Fs>
-struct overload : Fs... {
-   overload(Fs&&... fs) : Fs{ fs }... {}
-   using Fs::operator()...;
-};
+//template <class ... Fs>
+//struct overload : Fs... {
+//   overload(Fs&&... fs) : Fs{ fs }... {}
+//   using Fs::operator()...;
+//};
+
+template<class... Ts> struct overloaded : Ts... { using Ts::operator()...; };
+template<class... Ts> overloaded(Ts...)->overloaded<Ts...>;
 
 template <class ... Fs>
-struct overload_unref : overload<Fs...> {
+struct overload_unref : overloaded<Fs...> {
    overload_unref(Fs&&... fs)
-      : overload<Fs...>{ std::forward<Fs>(fs)... }
+      : overloaded<Fs...>{ std::forward<Fs>(fs)... }
    {}
 
-   using overload<Fs...>::operator();
+   using overloaded<Fs...>::operator();
 
    template <class T>
    auto operator()(std::reference_wrapper<T> rw) {
@@ -223,8 +226,7 @@ struct overload_unref : overload<Fs...> {
 };
 
 
-template<class... Ts> struct overloaded : Ts... { using Ts::operator()...; };
-template<class... Ts> overloaded(Ts...)->overloaded<Ts...>;
+
 
 }
 
