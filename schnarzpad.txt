@@ -8,3 +8,5 @@ My Schnarzpad
 https://medium.com/@cscalfani/goodbye-object-oriented-programming-a59cda4c0e53
 http://wiki.c2.com/?ArgumentsAgainstOop
 http://steve-yegge.blogspot.com/2006/03/execution-in-kingdom-of-nouns.html
+
+https://blogs.unity3d.com/2018/03/16/the-high-definition-render-pipeline-focused-on-visual-quality/
