@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\base\dllmain.cpp" />
+    <ClCompile Include="src\base\game.cpp" />
     <ClCompile Include="src\base\schnarzmaschine.cpp" />
     <ClCompile Include="src\gfx\render_context.cpp" />
     <ClCompile Include="src\gfx\app.cpp" />
@@ -28,12 +29,14 @@
     <ClInclude Include="include\sm\api.h" />
     <ClInclude Include="include\sm\command_queue.hpp" />
     <ClInclude Include="include\sm\functional.hpp" />
+    <ClInclude Include="include\sm\game.h" />
     <ClInclude Include="include\sm\gfx\private\render_context_vk.hpp" />
     <ClInclude Include="include\sm\gfx\render_context.h" />
     <ClInclude Include="include\sm\gfx\app.h" />
     <ClInclude Include="include\sm\logger.h" />
     <ClInclude Include="include\sm\macro_util.hpp" />
     <ClInclude Include="include\sm\schnarzmaschine.h" />
+    <ClInclude Include="include\sm\schnarzpad.h" />
     <ClInclude Include="include\sm\scoped_timer.hpp" />
     <ClInclude Include="include\sm\scoped_wait_timer.hpp" />
     <ClInclude Include="include\sm\system_logger.hpp" />

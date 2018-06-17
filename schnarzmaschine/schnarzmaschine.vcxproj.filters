@@ -24,6 +24,9 @@
     <ClCompile Include="src\gfx\app.cpp">
       <Filter>gfx</Filter>
     </ClCompile>
+    <ClCompile Include="src\base\game.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\base\targetver.h">
@@ -66,6 +69,12 @@
       <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="include\sm\macro_util.hpp">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="include\sm\schnarzpad.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="include\sm\game.h">
       <Filter>base</Filter>
     </ClInclude>
   </ItemGroup>
