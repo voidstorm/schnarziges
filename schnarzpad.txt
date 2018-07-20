@@ -13,3 +13,73 @@ https://blogs.unity3d.com/2018/03/16/the-high-definition-render-pipeline-focused
 
 https://github.com/arximboldi/immer
 https://www.youtube.com/watch?v=sPhpelUfu8Q
+
+////-------------------------------------
+/// Draft for game++ language-----------
+////-----------------------------------
+
+1.1 Scope of game++
+
+The goal of game++ is to create a language framework for writing games. As such, the language should
+provide direct support for game typical tasks, such as rendering, logic, resource management. The have
+support on language level should help game developers to handle game specific tasks a lot easier. This includes
+writing shaders and corresponding client code, game logic, network code, resource management and serialization.
+
+1.2 Examples
+
+opt
+module MODULE_NAME::SUB_MODULE_NAME0...n{
+
+    interface IF_NAME{
+        interface SUB_IF_NAME{
+            fun FN_NAME(param...) -> return_type : opt; 
+        }
+        fun FN_NAME(param...) -> return_type  : opt; 
+    }
+
+
+    class CLASS_NAME : INTERFACE0,...n{
+
+        fun NAME(params..) -> return_type : opt{
+            
+        }
+    }
+
+
+    //Freestanding functions
+    fun NAME(params..) -> return_type : opt{
+
+        def a= 1.0f;
+        //lambda
+        def a_fun= fun(params)->rt{
+
+        };
+
+
+    //expressions
+    def a= 1.0f;
+    def a,b : float= 1.0f;
+    def a,b : float= 1.0f, 2.0f;
+
+    def l = [1,2,4];
+    def l2 = [1...23, 5...7, !6]; 1..23, then 5..7, remove all 6s
+
+    def l2 = [1...100, !{x % 2}]; //only odd numbers
+
+    def l2 = [2:100]; //fills with 2 x 100 times 
+
+    def l2 = [type:100]; //fills with type x 100 times 
+
+    def l2 = [1..100] |> map (fun(x){x % 2});
+
+
+    //lambda
+    def a_fun= fun(params)->rt{
+
+    };
+ 
+
+    }
+
+
+}
