@@ -590,8 +590,14 @@ __if(__platform == platform.x64){
     }
 
     graph main(){
-        hello_data hellod(current_date= calc_date.current_date);
-        hello hello_world(hello_data.output);
+
+        hello_data{
+            .input= calc_date.current_date;
+        };
+
+        hello_world{            
+            .input= hello_data.output;
+        };
     }
 }
 
