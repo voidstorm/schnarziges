@@ -556,6 +556,23 @@ LINE_COMMENT
 
 module app{
     import time, io;
+    
+    type CustomVec3 {
+        uint x,y,z;
+    }
+
+    type CustomVec4 : extends CustomVec3{
+        uint w;
+    }
+
+//preprocessor statements
+__if(__platform == platform.x64){
+    type uint32= uint;
+    type uint16= half uint;
+    type uint64= long uint;
+}__else{
+
+}    
 
     node calc_date->(time current_date){
         current_date= getCurrentTime();
