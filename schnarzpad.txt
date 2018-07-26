@@ -583,12 +583,23 @@ __if(__platform == platform.x64){
         output= "hello world its: " + time.as_time(current_date);
     }
 
+    node calc_date->(time current_date){
+        current_date= getCurrentTime();
+    }
+
+    node hello_data(time current_date)->(string output){
+        output= "hello world its: " + time.as_time(current_date);
+    }
+
     node hello(string input){
         task{
             io.println("hello world");
+            graph.exit= false;
         }
     }
-    graph g1()->(bool running){
+
+
+    graph g1()->(bool exit= true){
         hello_data{
             .input= calc_date.current_date;
         };
@@ -598,11 +609,8 @@ __if(__platform == platform.x64){
         };
     }
 
-    graph main(){
+    graph main(array<strings> args)->(int status){
         g1 g;
-        while(g.running){
-            g.execute();
-        }
     }
 }
 
