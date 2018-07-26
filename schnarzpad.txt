@@ -600,6 +600,20 @@ __if(__platform == platform.x64){
 
 
     graph g1()->(bool exit= true){
+        g2 gg2;
+        hello_data{
+            .input= calc_date.current_date;
+        };
+
+        hello{            
+            .input= hello_data.output;
+            exit= .exit;
+            gg2.start= true;
+        };
+        //exit= hello.exit;
+    }
+
+    graph g2()->(bool exit= true){
         hello_data{
             .input= calc_date.current_date;
         };
@@ -607,7 +621,7 @@ __if(__platform == platform.x64){
         hello_world{            
             .input= hello_data.output;
         };
-    }
+    }    
 
     graph main(array<strings> args)->(int status){
         g1 g;
