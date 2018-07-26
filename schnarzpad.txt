@@ -111,15 +111,46 @@ module MODULE_NAME::SUB_MODULE_NAME0...n{
 
 lexer grammar gameppLexer;
 
+
 // §3.9 Keywords
 
- CONST : 'const';
- NODE : 'task';
+ MODULE : 'module';
+ MUTABLE : 'mutable';
+ NODE : 'node';
+ TASK : 'task';
  GRAPH : 'graph';
  FUNCTION : 'fun'; 
- RESOURCE : 'resource';
- DATA : 'data';
  TYPE : 'type';
+ SHARED : 'shared';
+ FOR : 'for';
+ WHILE : 'while';
+ DO : 'do';
+ IF : 'if';
+ ELSE : 'else';
+ RETURN : 'return';
+ YIELD : 'yield';
+ DEF : 'def';
+ IN : 'in';
+ SIZEOF : 'sizeof';
+ COUNT : 'countof';
+ TYPEOF : 'typeof';
+ EXTENDS : 'extends';
+
+ //code gen, präprocessor
+ PPTYPE : '__type';
+ PPFOR : '__for';
+ PPWHILE : '__while';
+ PPDO : '__do';
+ PPIF : '__if';
+ PPELSE : '__else';
+ PPRETURN : '__return';
+ PPYIELD : '__yield';
+ PPDEF : '__def';
+ PPIN : '__in';
+ PPSIZEOF : '__sizeof';
+ PPCOUNT : '__countof';
+ PPTYPEOF : '__typeof';
+ PPEXTENDS : '__extends';
 
  //types
  BYTE : 'byte';
@@ -132,9 +163,10 @@ lexer grammar gameppLexer;
  FLOAT : 'float';
  STRING : 'string';
  //string prefixes
- UTF8 : 'u8';
- UTF16 : 'u16';
- UTF32 : 'u32';
+ UTF8 : 'utf8';
+ UTF16 : 'utf16';
+ UTF32 : 'utf32';
+ TIME : 'time';
 
 //u8char, u16string
  
@@ -146,6 +178,7 @@ lexer grammar gameppLexer;
  ARRAY : 'array';
  LIST : 'list';
 
+// §3.10.1 Integer Literals
 // §3.10.1 Integer Literals
 
 IntegerLiteral
