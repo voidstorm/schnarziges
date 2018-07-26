@@ -167,7 +167,8 @@ lexer grammar gameppLexer;
  UTF16 : 'utf16';
  UTF32 : 'utf32';
  TIME : 'time';
-
+ NULL : 'null';
+ 
 //u8char, u16string
  
  //suffixes N, NxN
