@@ -588,9 +588,7 @@ __if(__platform == platform.x64){
             io.println("hello world");
         }
     }
-
-    graph main(){
-
+    graph g1()->(bool running){
         hello_data{
             .input= calc_date.current_date;
         };
@@ -598,6 +596,13 @@ __if(__platform == platform.x64){
         hello_world{            
             .input= hello_data.output;
         };
+    }
+
+    graph main(){
+        g1 g;
+        while(g.running){
+            g.execute();
+        }
     }
 }
 
