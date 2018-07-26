@@ -521,3 +521,26 @@ LINE_COMMENT
     :   '//' ~[\r\n]* -> channel(HIDDEN)
 ;
 
+module app{
+    import time, io;
+
+    node calc_date->(time current_date){
+        current_date= getCurrentTime();
+    }
+
+    node hello_data(time current_date)->(string output){
+        output= "hello world its: " + time.as_time(current_date);
+    }
+
+    node hello(string input){
+        task{
+            io.println("hello world");
+        }
+    }
+
+    graph main(){
+        hello_data hellod(current_date= calc_date.current_date);
+        hello hello_world(hello_data.output);
+    }
+}
+
