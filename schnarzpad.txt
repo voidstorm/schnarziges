@@ -1,4 +1,3 @@
-
 My Schnarzpad
 
 -Add stream ops to tuple class stuff
@@ -25,7 +24,6 @@ The goal of game++ is to create a language framework for writing games. As such,
 provide direct support for game typical tasks, such as rendering, logic, resource management. The have
 support on language level should help game developers to handle game specific tasks a lot easier. This includes
 writing shaders and corresponding client code, game logic, network code, resource management and serialization.
-
 
 1.2 Examples
 
@@ -57,21 +55,11 @@ module MODULE_NAME::SUB_MODULE_NAME0...n{
 
         };
 
-    //vector and matix types are part of the language
+    //expressions
+    def a= 1.0f;
+    def a,b : float= 1.0f;
+    def a,b : float= 1.0f, 2.0f;
 
-    vec2..4
-
-    mat2..4
-
-    mat2x4...mat4x4
-
-    //universal init
-    any_data_type = {};
-
-    //tuple
-   def a_tuple = (1,2,3);
-
-    //array type
     def l = [1,2,4];
     def l2 = [1...23, 5...7, !6]; 1..23, then 5..7, remove all 6s
 
@@ -84,14 +72,6 @@ module MODULE_NAME::SUB_MODULE_NAME0...n{
     def l2 = [1..100] |> map (fun(x){x % 2});
 
 
-    //expressions
-    def a= 1.0f;
-    def a,b : float= 1.0f;
-    def a,b : float= 1.0f, 2.0f;
-
- 
-
-
     //lambda
     def a_fun= fun(params)->rt{
 
@@ -101,46 +81,550 @@ module MODULE_NAME::SUB_MODULE_NAME0...n{
     }
 
 
+    struct a_file 
+    {
+
+    }
+
+    resource a_resource
+    {
+
+    }
+
+    task add_node (int a, int b) -> (int result, bool status){
+        result= a*b;
+        statust= true;
+    }
+
+    graph g(){
+        add_node node(a= 1, b=2); //automatic parallel
+        add_node node2(a= 1, b=2); //automatic parallel
+        add_node node3(a= node1.result, b= node2.result);
+        print_node p(node3);
+    }
+
+    graph g(async);
+    g.execute();
+
+
 }
 
+lexer grammar gameppLexer;
 
 
-XI.) Completely new ideas
+// §3.9 Keywords
 
-Node and task based. Input output nodes that operate on data. Organize language as task graph.
+ MODULE : 'module';
+ MUTABLE : 'mutable';
+ NODE : 'node';
+ TASK : 'task';
+ GRAPH : 'graph';
+ FUNCTION : 'fun'; 
+ TYPE : 'type';
+ SHARED : 'shared';
+ FOR : 'for';
+ WHILE : 'while';
+ DO : 'do';
+ IF : 'if';
+ ELSE : 'else';
+ RETURN : 'return';
+ YIELD : 'yield';
+ DEF : 'def';
+ IN : 'in';
+ SIZEOF : 'sizeof';
+ COUNT : 'countof';
+ TYPEOF : 'typeof';
+ EXTENDS : 'extends';
+
+ //code gen, präprocessor
+ PPTYPE : '__type';
+ PPFOR : '__for';
+ PPWHILE : '__while';
+ PPDO : '__do';
+ PPIF : '__if';
+ PPELSE : '__else';
+ PPRETURN : '__return';
+ PPYIELD : '__yield';
+ PPDEF : '__def';
+ PPIN : '__in';
+ PPSIZEOF : '__sizeof';
+ PPCOUNT : '__countof';
+ PPTYPEOF : '__typeof';
+ PPEXTENDS : '__extends';
+
+ //types
+ BYTE : 'byte';
+ CHAR : 'char';
+ LONG : 'long';
+ HALF : 'half';
+ INT : 'int';
+ UINT : 'uint';
+ COMPLEX : 'complex';
+ FLOAT : 'float';
+ STRING : 'string';
+ //string prefixes
+ UTF8 : 'utf8';
+ UTF16 : 'utf16';
+ UTF32 : 'utf32';
+ TIME : 'time';
+ NULL : 'null';
+ 
+//u8char, u16string
+ 
+ //suffixes N, NxN
+ //e.g float4, float4x4, half float4
 
 
-Node Example:
+ STRUCT : 'struct';
+ ARRAY : 'array';
+ LIST : 'list';
+
+// §3.10.1 Integer Literals
+// §3.10.1 Integer Literals
+
+IntegerLiteral
+	:	DecimalIntegerLiteral
+	|	HexIntegerLiteral
+	|	OctalIntegerLiteral
+	|	BinaryIntegerLiteral
+	;
+
+fragment
+DecimalIntegerLiteral
+	:	DecimalNumeral IntegerTypeSuffix?
+	;
+
+fragment
+HexIntegerLiteral
+	:	HexNumeral IntegerTypeSuffix?
+	;
+
+fragment
+OctalIntegerLiteral
+	:	OctalNumeral IntegerTypeSuffix?
+	;
+
+fragment
+BinaryIntegerLiteral
+	:	BinaryNumeral IntegerTypeSuffix?
+	;
+
+fragment
+IntegerTypeSuffix
+	:	[lL]
+	;
+
+fragment
+DecimalNumeral
+	:	'0'
+	|	NonZeroDigit (Digits? | Underscores Digits)
+	;
+
+fragment
+Digits
+	:	Digit (DigitsAndUnderscores? Digit)?
+	;
+
+fragment
+Digit
+	:	'0'
+	|	NonZeroDigit
+	;
+
+fragment
+NonZeroDigit
+	:	[1-9]
+	;
+
+fragment
+DigitsAndUnderscores
+	:	DigitOrUnderscore+
+	;
+
+fragment
+DigitOrUnderscore
+	:	Digit
+	|	'_'
+	;
+
+fragment
+Underscores
+	:	'_'+
+	;
+
+fragment
+HexNumeral
+	:	'0' [xX] HexDigits
+	;
+
+fragment
+HexDigits
+	:	HexDigit (HexDigitsAndUnderscores? HexDigit)?
+	;
+
+fragment
+HexDigit
+	:	[0-9a-fA-F]
+	;
+
+fragment
+HexDigitsAndUnderscores
+	:	HexDigitOrUnderscore+
+	;
+
+fragment
+HexDigitOrUnderscore
+	:	HexDigit
+	|	'_'
+	;
+
+fragment
+OctalNumeral
+	:	'0' Underscores? OctalDigits
+	;
+
+fragment
+OctalDigits
+	:	OctalDigit (OctalDigitsAndUnderscores? OctalDigit)?
+	;
+
+fragment
+OctalDigit
+	:	[0-7]
+	;
+
+fragment
+OctalDigitsAndUnderscores
+	:	OctalDigitOrUnderscore+
+	;
+
+fragment
+OctalDigitOrUnderscore
+	:	OctalDigit
+	|	'_'
+	;
+
+fragment
+BinaryNumeral
+	:	'0' [bB] BinaryDigits
+	;
+
+fragment
+BinaryDigits
+	:	BinaryDigit (BinaryDigitsAndUnderscores? BinaryDigit)?
+	;
+
+fragment
+BinaryDigit
+	:	[01]
+	;
+
+fragment
+BinaryDigitsAndUnderscores
+	:	BinaryDigitOrUnderscore+
+	;
+
+fragment
+BinaryDigitOrUnderscore
+	:	BinaryDigit
+	|	'_'
+	;
+
+// §3.10.2 Floating-Point Literals
+
+FloatingPointLiteral
+	:	DecimalFloatingPointLiteral
+	|	HexadecimalFloatingPointLiteral
+	;
+
+fragment
+DecimalFloatingPointLiteral
+	:	Digits '.' Digits? ExponentPart? FloatTypeSuffix?
+	|	'.' Digits ExponentPart? FloatTypeSuffix?
+	|	Digits ExponentPart FloatTypeSuffix?
+	|	Digits FloatTypeSuffix
+	;
+
+fragment
+ExponentPart
+	:	ExponentIndicator SignedInteger
+	;
+
+fragment
+ExponentIndicator
+	:	[eE]
+	;
+
+fragment
+SignedInteger
+	:	Sign? Digits
+	;
+
+fragment
+Sign
+	:	[+-]
+	;
+
+fragment
+FloatTypeSuffix
+	:	[fFdD]
+	;
+
+fragment
+HexadecimalFloatingPointLiteral
+	:	HexSignificand BinaryExponent FloatTypeSuffix?
+	;
+
+fragment
+HexSignificand
+	:	HexNumeral '.'?
+	|	'0' [xX] HexDigits? '.' HexDigits
+	;
+
+fragment
+BinaryExponent
+	:	BinaryExponentIndicator SignedInteger
+	;
+
+fragment
+BinaryExponentIndicator
+	:	[pP]
+	;
+
+// §3.10.3 Boolean Literals
+
+BooleanLiteral
+	:	'true'
+	|	'false'
+	;
+
+// §3.10.4 Character Literals
+
+CharacterLiteral
+	:	'\'' SingleCharacter '\''
+	|	'\'' EscapeSequence '\''
+	;
+
+fragment
+SingleCharacter
+	:	~['\\\r\n]
+	;
+// §3.10.5 String Literals
+StringLiteral
+	:	'"' StringCharacters? '"'
+	;
+fragment
+StringCharacters
+	:	StringCharacter+
+	;
+fragment
+StringCharacter
+	:	~["\\\r\n]
+	|	EscapeSequence
+	;
+// §3.10.6 Escape Sequences for Character and String Literals
+fragment
+EscapeSequence
+	:	'\\' [btnfr"'\\]
+	|	OctalEscape
+    |   UnicodeEscape // This is not in the spec but prevents having to preprocess the input
+	;
+
+fragment
+OctalEscape
+	:	'\\' OctalDigit
+	|	'\\' OctalDigit OctalDigit
+	|	'\\' ZeroToThree OctalDigit OctalDigit
+	;
+
+fragment
+ZeroToThree
+	:	[0-3]
+	;
+
+// This is not in the spec but prevents having to preprocess the input
+fragment
+UnicodeEscape
+    :   '\\' 'u'+ HexDigit HexDigit HexDigit HexDigit
+    ;
+
+// §3.10.7 The Null Literal
+
+NullLiteral
+	:	'null'
+	;
+
+// §3.11 Separators
+
+LPAREN : '(';
+RPAREN : ')';
+LBRACE : '{';
+RBRACE : '}';
+LBRACK : '[';
+RBRACK : ']';
+SEMI : ';';
+COMMA : ',';
+DOT : '.';
+ELLIPSIS : '...';
+AT : '@';
+COLONCOLON : '::';
 
 
-node SomeNode (input pins...) -> (output pins...){
+// §3.12 Operators
 
+ASSIGN : '=';
+GT : '>';
+LT : '<';
+BANG : '!';
+TILDE : '~';
+QUESTION : '?';
+COLON : ':';
+ARROW : '->';
+EQUAL : '==';
+LE : '<=';
+GE : '>=';
+NOTEQUAL : '!=';
+AND : '&&';
+OR : '||';
+INC : '++';
+DEC : '--';
+ADD : '+';
+SUB : '-';
+MUL : '*';
+DIV : '/';
+BITAND : '&';
+BITOR : '|';
+CARET : '^';
+MOD : '%';
+LSHIFT : '<<';
+RSHIFT : '>>';
+//URSHIFT : '>>>';
+
+ADD_ASSIGN : '+=';
+SUB_ASSIGN : '-=';
+MUL_ASSIGN : '*=';
+DIV_ASSIGN : '/=';
+AND_ASSIGN : '&=';
+OR_ASSIGN : '|=';
+XOR_ASSIGN : '^=';
+MOD_ASSIGN : '%=';
+LSHIFT_ASSIGN : '<<=';
+RSHIFT_ASSIGN : '>>=';
+URSHIFT_ASSIGN : '>>>=';
+
+// §3.8 Identifiers (must appear after all keywords in the grammar)
+
+Identifier
+	:	JavaLetter JavaLetterOrDigit*
+	;
+
+fragment
+JavaLetter
+	:	[a-zA-Z$_] // these are the "java letters" below 0x7F
+	|	// covers all characters above 0x7F which are not a surrogate
+		~[\u0000-\u007F\uD800-\uDBFF]
+		{Character.isJavaIdentifierStart(_input.LA(-1))}?
+	|	// covers UTF-16 surrogate pairs encodings for U+10000 to U+10FFFF
+		[\uD800-\uDBFF] [\uDC00-\uDFFF]
+		{Character.isJavaIdentifierStart(Character.toCodePoint((char)_input.LA(-2), (char)_input.LA(-1)))}?
+	;
+
+fragment
+JavaLetterOrDigit
+	:	[a-zA-Z0-9$_] // these are the "java letters or digits" below 0x7F
+	|	// covers all characters above 0x7F which are not a surrogate
+		~[\u0000-\u007F\uD800-\uDBFF]
+		{Character.isJavaIdentifierPart(_input.LA(-1))}?
+	|	// covers UTF-16 surrogate pairs encodings for U+10000 to U+10FFFF
+		[\uD800-\uDBFF] [\uDC00-\uDFFF]
+		{Character.isJavaIdentifierPart(Character.toCodePoint((char)_input.LA(-2), (char)_input.LA(-1)))}?
+	;
+
+//
+// Whitespace and comments
+//
+
+WS  :  [ \t\r\n\u000C]+ -> skip
+    ;
+
+COMMENT
+    :   '/*' .*? '*/' -> channel(HIDDEN)
+    ;
+
+LINE_COMMENT
+    :   '//' ~[\r\n]* -> channel(HIDDEN)
+;
+
+module app{
+    import time, io;
+    
+    type CustomVec3 {
+        uint x,y,z;
+    }
+
+    type CustomVec4 : extends CustomVec3{
+        uint w;
+    }
+
+//preprocessor statements
+__if(__platform == platform.x64){
+    type uint32= uint;
+    type uint16= half uint;
+    type uint64= long uint;
+}__else{
+
+}    
+
+    node calc_date->(time current_date){
+        current_date= getCurrentTime();
+    }
+
+    node hello_data(time current_date)->(string output){
+        output= "hello world its: " + time.as_time(current_date);
+    }
+
+    node calc_date->(time current_date){
+        current_date= getCurrentTime();
+    }
+
+    node hello_data(time current_date)->(string output){
+        output= "hello world its: " + time.as_time(current_date);
+    }
+
+    node hello(string input){
+        task{
+            io.println("hello world");
+            graph.exit= false;
+        }
+    }
+
+
+    graph g1()->(bool exit= true){
+        g2 gg2;
+        hello_data{
+            .input= calc_date.current_date;
+        };
+
+        hello{            
+            .input= hello_data.output;
+            exit= .exit;
+            gg2.start= true;
+        };
+        //exit= hello.exit;
+    }
+
+    graph g2()->(bool exit= true){
+        hello_data{
+            .input= calc_date.current_date;
+        };
+
+        hello_world{            
+            .input= hello_data.output;
+        };
+    }    
+
+    graph main(array<strings> args)->(int status){
+        g1 g;
+    }
 }
 
-node Add (int a, int b, bool status)-> (int result, bool status){
-    result= a+b;
-    status = true;
-}
-
-
-
-node Mult (int a, int b, bool status) -> (int result, bool status){
-    result= a*b;
-}
-
-graph Main () -> (int result) {
-    Add add(a= 1, b=2);
-    Add add2(a= 1, b=2);
-
-    Mult mult(a= add.result, b=add2.result, status= add.status);
-    result= mult.result;
-}
-
-
-fun main(){
-
-    Main main();
-
-    def result= main.execAsync();    
-
-}
