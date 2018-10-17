@@ -1,3 +1,4 @@
+
 My Schnarzpad
 
 -Add stream ops to tuple class stuff
@@ -24,6 +25,7 @@ The goal of game++ is to create a language framework for writing games. As such,
 provide direct support for game typical tasks, such as rendering, logic, resource management. The have
 support on language level should help game developers to handle game specific tasks a lot easier. This includes
 writing shaders and corresponding client code, game logic, network code, resource management and serialization.
+
 
 1.2 Examples
 
@@ -55,12 +57,21 @@ module MODULE_NAME::SUB_MODULE_NAME0...n{
 
         };
 
+    //vector and matix types are part of the language
 
-    //expressions
-    def a= 1.0f;
-    def a,b : float= 1.0f;
-    def a,b : float= 1.0f, 2.0f;
+    vec2..4
 
+    mat2..4
+
+    mat2x4...mat4x4
+
+    //universal init
+    any_data_type = {};
+
+    //tuple
+   def a_tuple = (1,2,3);
+
+    //array type
     def l = [1,2,4];
     def l2 = [1...23, 5...7, !6]; 1..23, then 5..7, remove all 6s
 
@@ -73,6 +84,14 @@ module MODULE_NAME::SUB_MODULE_NAME0...n{
     def l2 = [1..100] |> map (fun(x){x % 2});
 
 
+    //expressions
+    def a= 1.0f;
+    def a,b : float= 1.0f;
+    def a,b : float= 1.0f, 2.0f;
+
+ 
+
+
     //lambda
     def a_fun= fun(params)->rt{
 
@@ -81,5 +100,47 @@ module MODULE_NAME::SUB_MODULE_NAME0...n{
 
     }
 
+
+}
+
+
+
+XI.) Completely new ideas
+
+Node and task based. Input output nodes that operate on data. Organize language as task graph.
+
+
+Node Example:
+
+
+node SomeNode (input pins...) -> (output pins...){
+
+}
+
+node Add (int a, int b, bool status)-> (int result, bool status){
+    result= a+b;
+    status = true;
+}
+
+
+
+node Mult (int a, int b, bool status) -> (int result, bool status){
+    result= a*b;
+}
+
+graph Main () -> (int result) {
+    Add add(a= 1, b=2);
+    Add add2(a= 1, b=2);
+
+    Mult mult(a= add.result, b=add2.result, status= add.status);
+    result= mult.result;
+}
+
+
+fun main(){
+
+    Main main();
+
+    def result= main.execAsync();    
 
 }
