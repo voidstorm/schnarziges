@@ -1,6 +1,7 @@
 #pragma once
 #include "command_queue.hpp"
 #include "scoped_timer.hpp"
+#include <atomic>
 #include <Windows.h>
 
 //SAMPLE
@@ -88,7 +89,7 @@ public:
       if (flags.current_context) {
          thread_task();
       } else {
-         m_work_thread = std::make_unique<std::thread>(thread_task);
+         m_work_thread = std::make_unique<std::thread>(std::move(thread_task));
       }
    }
 
@@ -102,7 +103,11 @@ public:
    }
 
    auto request_exit() {
-      get_command_queue().submit(sm::thread::CommandQueue<Rt, Arg, Args...>::QueueTask::type([this](void)->std::any { m_running= false; return Rt(); }));
+      get_command_queue().submit(sm::thread::CommandQueue<Rt, Arg, Args...>::QueueTask::type([this](void)->std::any { 
+         m_running= false;
+         std::atomic_thread_fence(std::memory_order_seq_cst);
+         return Rt(); 
+      }));
       return std::async(std::launch::async, [this]()->void {
          if (m_work_thread->joinable()) {
             m_work_thread->join();
@@ -114,7 +119,7 @@ public:
    }
 
    std::chrono::high_resolution_clock::duration get_duration() const {
-      return m_last_duration.load(std::memory_order::memory_order_acquire);
+      return m_last_duration.load(std::memory_order_acquire);
    }
 
 private:

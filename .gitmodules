@@ -22,3 +22,12 @@
 [submodule "3rdparty/ve-z"]
 	path = 3rdparty/ve-z
 	url = https://github.com/GPUOpen-LibrariesAndSDKs/V-EZ.git
+[submodule "3rdparty/RxCpp"]
+	path = 3rdparty/RxCpp
+	url = https://github.com/voidstorm/RxCpp.git
+[submodule "3rdparty/gsl"]
+	path = 3rdparty/gsl
+	url = https://github.com/voidstorm/GSL.git
+[submodule "3rdparty/range-v3"]
+	path = 3rdparty/range-v3
+	url = https://github.com/voidstorm/range-v3.git

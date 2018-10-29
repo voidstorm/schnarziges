@@ -16,8 +16,8 @@ xcopy ..\3rdparty\glfw\build_x64\src\Debug\*.pdb .\x64\debug /I /D /Y
 xcopy ..\3rdparty\glfw\build_x64\src\Release\*.dll .\x64\release /I /D /Y
 xcopy ..\3rdparty\glfw\build_x64\src\Release\*.pdb .\x64\release /I /D /Y
 
-xcopy ..\3rdparty\vez\Bin\x86_64\*.dll .\x64\release /I /D /Y
-xcopy ..\3rdparty\vez\Bin\x86_64\*.pdb .\x64\release /I /D /Y
+xcopy ..\3rdparty\ve-z\Bin\x86_64\*.dll .\x64\release /I /D /Y
+xcopy ..\3rdparty\ve-z\Bin\x86_64\*.pdb .\x64\release /I /D /Y
 
-xcopy ..\3rdparty\vez\Bin\x86_64\*.dll .\x64\debug /I /D /Y
-xcopy ..\3rdparty\vez\Bin\x86_64\*.pdb .\x64\debug /I /D /Y
+xcopy ..\3rdparty\ve-z\Bin\x86_64\*.dll .\x64\debug /I /D /Y
+xcopy ..\3rdparty\ve-z\Bin\x86_64\*.pdb .\x64\debug /I /D /Y
