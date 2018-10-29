@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "schnarzgame", "schnarzgame.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "schnarzmaschine", "..\schnarzmaschine\schnarzmaschine.vcxproj", "{33456486-1457-427C-B83F-F17AC1660E97}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "schnarzbench", "..\Schnarzbench\Schnarzbench.vcxproj", "{D4618DDF-D453-4CBC-B655-395E434EC0F8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{33456486-1457-427C-B83F-F17AC1660E97}.Release|x64.Build.0 = Release|x64
 		{33456486-1457-427C-B83F-F17AC1660E97}.Release|x86.ActiveCfg = Release|Win32
 		{33456486-1457-427C-B83F-F17AC1660E97}.Release|x86.Build.0 = Release|Win32
+		{D4618DDF-D453-4CBC-B655-395E434EC0F8}.Debug|x64.ActiveCfg = Debug|x64
+		{D4618DDF-D453-4CBC-B655-395E434EC0F8}.Debug|x64.Build.0 = Debug|x64
+		{D4618DDF-D453-4CBC-B655-395E434EC0F8}.Debug|x86.ActiveCfg = Debug|Win32
+		{D4618DDF-D453-4CBC-B655-395E434EC0F8}.Debug|x86.Build.0 = Debug|Win32
+		{D4618DDF-D453-4CBC-B655-395E434EC0F8}.Release|x64.ActiveCfg = Release|x64
+		{D4618DDF-D453-4CBC-B655-395E434EC0F8}.Release|x64.Build.0 = Release|x64
+		{D4618DDF-D453-4CBC-B655-395E434EC0F8}.Release|x86.ActiveCfg = Release|Win32
+		{D4618DDF-D453-4CBC-B655-395E434EC0F8}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

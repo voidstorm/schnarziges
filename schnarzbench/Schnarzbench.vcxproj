@@ -19,59 +19,38 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\base\dllmain.cpp" />
-    <ClCompile Include="src\base\game.cpp" />
-    <ClCompile Include="src\base\schnarzmaschine.cpp" />
-    <ClCompile Include="src\gfx\render_context.cpp" />
-    <ClCompile Include="src\gfx\app.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="include\sm\api.h" />
-    <ClInclude Include="include\sm\command_queue.hpp" />
-    <ClInclude Include="include\sm\functional.hpp" />
-    <ClInclude Include="include\sm\game.h" />
-    <ClInclude Include="include\sm\gfx\private\render_context_vk.hpp" />
-    <ClInclude Include="include\sm\gfx\render_context.h" />
-    <ClInclude Include="include\sm\gfx\app.h" />
-    <ClInclude Include="include\sm\logger.h" />
-    <ClInclude Include="include\sm\macro_util.hpp" />
-    <ClInclude Include="include\sm\schnarzmaschine.h" />
-    <ClInclude Include="include\sm\schnarzpad.h" />
-    <ClInclude Include="include\sm\scoped_timer.hpp" />
-    <ClInclude Include="include\sm\scoped_wait_timer.hpp" />
-    <ClInclude Include="include\sm\system_logger.hpp" />
-    <ClInclude Include="include\sm\thread_context.hpp" />
-    <ClInclude Include="src\base\targetver.h" />
+    <ClCompile Include="src\schnarzbench.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{33456486-1457-427C-B83F-F17AC1660E97}</ProjectGuid>
+    <ProjectGuid>{D4618DDF-D453-4CBC-B655-395E434EC0F8}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>schnarzmaschine</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <RootNamespace>Schnarzbench</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <ProjectName>schnarzbench</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -95,10 +74,10 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -107,40 +86,40 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;SCHNARZMASCHINE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>include;..\3rdparty\glfw\include;..\3rdparty\gli;..\3rdparty\glm;..\3rdparty\ve-z\Include;..\3rdparty\steam-audio\steamaudio_api\include;..\3rdparty\assimp\include;..\3rdparty\bullet3\src;..\3rdparty\gsl\include;..\3rdparty\range-v3\include;..\3rdparty\RxCpp\Rx\v2\src;$(VULKAN_SDK)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
-    </ClCompile>
-    <Link>
-      <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\3rdparty\glfw\build_x64\src\Debug;%(AdditionalLibraryDirectories);..\3rdparty\ve-z\Bin\x86_64;..\3rdparty\assimp\build_x64\code\Debug;..\3rdparty\bullet3\build_x64\lib\Debug;..\3rdparty\steam-audio\steamaudio_api\lib\Windows\x64;$(VULKAN_SDK)\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>vulkan-1.lib;assimp-vc140-mt.lib;glfw3dll.lib;vez.lib;phonon.lib;Bullet3Common_Debug.lib;BulletSoftBody_Debug.lib;BulletDynamics_Debug.lib;BulletCollision_Debug.lib;BulletInverseDynamicsUtils_Debug.lib;BulletInverseDynamics_Debug.lib;LinearMath_Debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Link>
-  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;SCHNARZMASCHINE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>include;..\3rdparty\glfw\include;..\3rdparty\gli;..\3rdparty\glm;..\3rdparty\ve-z\Include;..\3rdparty\steam-audio\steamaudio_api\include;..\3rdparty\assimp\include;..\3rdparty\bullet3\src;..\3rdparty\gsl\include;..\3rdparty\range-v3\include;..\3rdparty\RxCpp\Rx\v2\src;$(VULKAN_SDK)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\3rdparty\glfw\build_x64\src\Debug;%(AdditionalLibraryDirectories);..\3rdparty\ve-z\Bin\x86_64;..\3rdparty\assimp\build_x64\code\Debug;..\3rdparty\bullet3\build_x64\lib\Debug;..\3rdparty\steam-audio\steamaudio_api\lib\Windows\x64;$(VULKAN_SDK)\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>vulkan-1.lib;assimp-vc140-mt.lib;glfw3dll.lib;vez.lib;phonon.lib;Bullet3Common_Debug.lib;BulletSoftBody_Debug.lib;BulletDynamics_Debug.lib;BulletCollision_Debug.lib;BulletInverseDynamicsUtils_Debug.lib;BulletInverseDynamics_Debug.lib;LinearMath_Debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>include;..\3rdparty\glfw\include;..\3rdparty\gli;..\3rdparty\glm;..\3rdparty\ve-z\Include;..\3rdparty\steam-audio\steamaudio_api\include;..\3rdparty\assimp\include;..\3rdparty\bullet3\src;..\3rdparty\gsl\include;..\3rdparty\range-v3\include;..\3rdparty\RxCpp\Rx\v2\src;$(VULKAN_SDK)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -151,18 +130,18 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;SCHNARZMASCHINE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>include;..\3rdparty\glfw\include;..\3rdparty\gli;..\3rdparty\glm;..\3rdparty\ve-z\Include;..\3rdparty\steam-audio\steamaudio_api\include;..\3rdparty\assimp\include;..\3rdparty\bullet3\src;..\3rdparty\gsl\include;..\3rdparty\range-v3\include;..\3rdparty\RxCpp\Rx\v2\src;$(VULKAN_SDK)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\3rdparty\glfw\build_x64\src\Release;%(AdditionalLibraryDirectories);..\3rdparty\ve-z\Bin\x86_64;..\3rdparty\assimp\build_x64\code\Release;..\3rdparty\bullet3\build_x64\lib\Release;..\3rdparty\steam-audio\steamaudio_api\lib\Windows\x64;$(VULKAN_SDK)\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>vulkan-1.lib;assimp-vc140-mt.lib;glfw3dll.lib;vez.lib;phonon.lib;Bullet3Common.lib;BulletSoftBody.lib;BulletDynamics.lib;BulletCollision.lib;BulletInverseDynamicsUtils.lib;BulletInverseDynamics.lib;LinearMath.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -173,18 +152,18 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;SCHNARZMASCHINE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>include;..\3rdparty\glfw\include;..\3rdparty\gli;..\3rdparty\glm;..\3rdparty\ve-z\Include;..\3rdparty\steam-audio\steamaudio_api\include;..\3rdparty\assimp\include;..\3rdparty\bullet3\src;..\3rdparty\gsl\include;..\3rdparty\range-v3\include;..\3rdparty\RxCpp\Rx\v2\src;$(VULKAN_SDK)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\3rdparty\glfw\build_x64\src\Release;%(AdditionalLibraryDirectories);..\3rdparty\ve-z\Bin\x86_64;..\3rdparty\assimp\build_x64\code\Release;..\3rdparty\bullet3\build_x64\lib\Release;..\3rdparty\steam-audio\steamaudio_api\lib\Windows\x64;$(VULKAN_SDK)\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>vulkan-1.lib;assimp-vc140-mt.lib;glfw3dll.lib;vez.lib;phonon.lib;Bullet3Common.lib;BulletSoftBody.lib;BulletDynamics.lib;BulletCollision.lib;BulletInverseDynamicsUtils.lib;BulletInverseDynamics.lib;LinearMath.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
