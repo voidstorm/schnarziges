@@ -96,7 +96,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>include;..\3rdparty\glfw\include;..\3rdparty\gli;..\3rdparty\glm;..\3rdparty\ve-z\Include;..\3rdparty\steam-audio\steamaudio_api\include;..\3rdparty\assimp\include;..\3rdparty\bullet3\src;..\3rdparty\gsl\include;..\3rdparty\range-v3\include;..\3rdparty\RxCpp\Rx\v2\src;$(VULKAN_SDK)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;..\3rdparty\glfw\include;..\3rdparty\gli;..\3rdparty\glm;..\3rdparty\ve-z\Include;..\3rdparty\steam-audio\steamaudio_api\include;..\3rdparty\assimp\include;..\3rdparty\bullet3\src;..\3rdparty\gsl\include;..\3rdparty\range-v3\include;..\3rdparty\RxCpp\Rx\v2\src;$(VULKAN_SDK)\include;..\schnarzmaschine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
@@ -114,7 +114,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>include;..\3rdparty\glfw\include;..\3rdparty\gli;..\3rdparty\glm;..\3rdparty\ve-z\Include;..\3rdparty\steam-audio\steamaudio_api\include;..\3rdparty\assimp\include;..\3rdparty\bullet3\src;..\3rdparty\gsl\include;..\3rdparty\range-v3\include;..\3rdparty\RxCpp\Rx\v2\src;$(VULKAN_SDK)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;..\3rdparty\glfw\include;..\3rdparty\gli;..\3rdparty\glm;..\3rdparty\ve-z\Include;..\3rdparty\steam-audio\steamaudio_api\include;..\3rdparty\assimp\include;..\3rdparty\bullet3\src;..\3rdparty\gsl\include;..\3rdparty\range-v3\include;..\3rdparty\RxCpp\Rx\v2\src;$(VULKAN_SDK)\include;..\schnarzmaschine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
@@ -134,7 +134,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>include;..\3rdparty\glfw\include;..\3rdparty\gli;..\3rdparty\glm;..\3rdparty\ve-z\Include;..\3rdparty\steam-audio\steamaudio_api\include;..\3rdparty\assimp\include;..\3rdparty\bullet3\src;..\3rdparty\gsl\include;..\3rdparty\range-v3\include;..\3rdparty\RxCpp\Rx\v2\src;$(VULKAN_SDK)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;..\3rdparty\glfw\include;..\3rdparty\gli;..\3rdparty\glm;..\3rdparty\ve-z\Include;..\3rdparty\steam-audio\steamaudio_api\include;..\3rdparty\assimp\include;..\3rdparty\bullet3\src;..\3rdparty\gsl\include;..\3rdparty\range-v3\include;..\3rdparty\RxCpp\Rx\v2\src;$(VULKAN_SDK)\include;..\schnarzmaschine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
@@ -156,7 +156,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>include;..\3rdparty\glfw\include;..\3rdparty\gli;..\3rdparty\glm;..\3rdparty\ve-z\Include;..\3rdparty\steam-audio\steamaudio_api\include;..\3rdparty\assimp\include;..\3rdparty\bullet3\src;..\3rdparty\gsl\include;..\3rdparty\range-v3\include;..\3rdparty\RxCpp\Rx\v2\src;$(VULKAN_SDK)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;..\3rdparty\glfw\include;..\3rdparty\gli;..\3rdparty\glm;..\3rdparty\ve-z\Include;..\3rdparty\steam-audio\steamaudio_api\include;..\3rdparty\assimp\include;..\3rdparty\bullet3\src;..\3rdparty\gsl\include;..\3rdparty\range-v3\include;..\3rdparty\RxCpp\Rx\v2\src;$(VULKAN_SDK)\include;..\schnarzmaschine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>

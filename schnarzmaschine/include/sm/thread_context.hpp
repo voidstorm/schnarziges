@@ -114,7 +114,7 @@ public:
          }});
    }
 
-   const sm::thread::CommandQueue<Rt, Arg, Args...>& get_command_queue() {
+   sm::thread::CommandQueue<Rt, Arg, Args...>& get_command_queue() {
       return m_work_items;
    }
 

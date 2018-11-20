@@ -31,3 +31,9 @@
 [submodule "3rdparty/range-v3"]
 	path = 3rdparty/range-v3
 	url = https://github.com/voidstorm/range-v3.git
+[submodule "3rdparty/antlr"]
+	path = 3rdparty/antlr
+	url = https://github.com/antlr/antlr4.git
+[submodule "3rdparty/game++"]
+	path = 3rdparty/game++
+	url = https://github.com/voidstorm/gamepp.git

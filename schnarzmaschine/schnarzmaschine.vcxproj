@@ -39,6 +39,8 @@
     <ClInclude Include="include\sm\schnarzpad.h" />
     <ClInclude Include="include\sm\scoped_timer.hpp" />
     <ClInclude Include="include\sm\scoped_wait_timer.hpp" />
+    <ClInclude Include="include\sm\shared_string_view.hpp" />
+    <ClInclude Include="include\sm\stack_container.hpp" />
     <ClInclude Include="include\sm\system_logger.hpp" />
     <ClInclude Include="include\sm\thread_context.hpp" />
     <ClInclude Include="src\base\targetver.h" />
