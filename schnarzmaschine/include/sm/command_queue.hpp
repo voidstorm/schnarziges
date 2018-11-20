@@ -61,7 +61,7 @@ public:
    //---------------------------------------------------------------------------------------
    //this is a sink function
    template<size_t SIZE>
-   auto submit(std::array<typename QueueTask::type, SIZE> &&tasks)->std::array<std::future<Rt>, SIZE> {
+   INLINE auto submit(std::array<typename QueueTask::type, SIZE> &&tasks)->std::array<std::future<Rt>, SIZE> {
       std::array<std::future<Rt>, SIZE> fs;
       int i = 0;
       for (auto& item : tasks) {
@@ -78,7 +78,7 @@ public:
    //---------------------------------------------------------------------------------------
    //this is a sink function
    template<typename Container>
-   auto submit(Container &&tasks)->std::vector<std::future<Rt>> {
+   INLINE auto submit(Container &&tasks)->std::vector<std::future<Rt>> {
       std::vector<std::future<Rt>> fs;
       for (auto& item : tasks) {
          fs.emplace_back(std::move(item.get_future()));
@@ -91,7 +91,7 @@ public:
    }
 
    //---------------------------------------------------------------------------------------
-   std::future<std::any> submit(typename QueueTask::type &&task) {
+   INLINE std::future<std::any> submit(typename QueueTask::type &&task) {
       auto f = task.get_future();
       while (m_busy.test_and_set(std::memory_order_acquire));
       m_commands_push->push_back(std::move(task));
@@ -101,21 +101,21 @@ public:
    }
 
    //---------------------------------------------------------------------------------------
-   size_t get_size() const {
+   INLINE size_t get_size() const {
       return m_commands_push->size();
    }
 
 private:
 
    //---------------------------------------------------------------------------------------
-   void swap() {
+   INLINE void swap() {
       while (m_busy.test_and_set(std::memory_order_acquire));
       std::swap(m_commands_push, m_commands_pop);
       m_busy.clear(std::memory_order_release);
    }
 
    //---------------------------------------------------------------------------------------
-   void process_all_commands(Args&&... args) {
+   INLINE void process_all_commands(Args&&... args) {
       swap();
       for (auto &cmd : *m_commands_pop) {
          cmd(std::forward<Args>(args)...);
@@ -124,7 +124,7 @@ private:
    }
 
    //---------------------------------------------------------------------------------------
-   bool is_waiting_for_work() {
+   INLINE bool is_waiting_for_work() {
       return m_waiting_for_work.test_and_set(std::memory_order_acquire);
    }
 
