@@ -102,7 +102,7 @@ public:
       request_exit();
    }
 
-   auto request_exit() {
+   INLINE auto request_exit() {
       get_command_queue().submit(sm::thread::CommandQueue<Rt, Arg, Args...>::QueueTask::type([this](void)->std::any { 
          m_running= false;
          std::atomic_thread_fence(std::memory_order_seq_cst);
@@ -114,11 +114,11 @@ public:
          }});
    }
 
-   const sm::thread::CommandQueue<Rt, Arg, Args...>& get_command_queue() {
+   INLINE sm::thread::CommandQueue<Rt, Arg, Args...>& get_command_queue() {
       return m_work_items;
    }
 
-   std::chrono::high_resolution_clock::duration get_duration() const {
+   INLINE std::chrono::high_resolution_clock::duration get_duration() const {
       return m_last_duration.load(std::memory_order_acquire);
    }
 
