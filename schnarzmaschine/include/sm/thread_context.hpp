@@ -103,7 +103,7 @@ public:
    }
 
    INLINE auto request_exit() {
-      get_command_queue().submit(sm::thread::CommandQueue<Rt, Arg, Args...>::QueueTask::type([this](void)->std::any { 
+      get_command_queue().submit(sm::thread::CommandQueue<Rt, Arg, Args...>::QueueTask::type([this](Arg, Args...)->Rt {
          m_running= false;
          std::atomic_thread_fence(std::memory_order_seq_cst);
          return Rt(); 

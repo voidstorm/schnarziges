@@ -58,6 +58,7 @@ public:
    CommandQueue& operator=(CommandQueue&&) = default;
    CommandQueue& operator=(const CommandQueue&) = delete;
 
+
    //---------------------------------------------------------------------------------------
    //this is a sink function
    template<size_t SIZE>
@@ -91,7 +92,7 @@ public:
    }
 
    //---------------------------------------------------------------------------------------
-   INLINE std::future<std::any> submit(typename QueueTask::type &&task) {
+   INLINE std::future<Rt> submit(typename QueueTask::type &&task) {
       auto f = task.get_future();
       while (m_busy.test_and_set(std::memory_order_acquire));
       m_commands_push->push_back(std::move(task));
