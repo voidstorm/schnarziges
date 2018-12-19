@@ -19,6 +19,8 @@
 #undef INLINE
 #endif
 #define INLINE __forceinline
+#define NO_INLINE __declspec(noinline)
+
 
 #ifdef _WIN32
 #pragma warning( disable : 4251 )
