@@ -47,13 +47,13 @@ INLINE constexpr void generate(Collection &&col, unop &&op) {
 }
 
 template <typename Condition, typename Function, typename... Arguments>
-INLINE constexpr void while_true(Condition &&cond, Function &&f, Arguments&&... args) {
-   while (cond() == true)
+INLINE constexpr void while_true(Condition &&cond, Function &&f, Arguments&& ...args) {
+   while (cond == true)
       f(std::forward<Arguments>(args)...);
 }
 
 template <typename Condition, typename Function, typename... Arguments>
-INLINE constexpr void while_false(Condition &&cond, Function &&f, Arguments&&... args) {
+INLINE constexpr void while_false(Condition &&cond, Function &&f, Arguments&& ...args) {
    while (cond() == false)
       f(std::forward<Arguments>(args)...);
 }
