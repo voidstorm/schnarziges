@@ -80,7 +80,7 @@
     <ClInclude Include="include\sm\shared_string_view.hpp">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="include\sm\stack_container.hpp">
+    <ClInclude Include="include\sm\array.hpp">
       <Filter>base</Filter>
     </ClInclude>
   </ItemGroup>

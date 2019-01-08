@@ -4,8 +4,8 @@
 #include <cassert>
 #include "api.h"
 
-
-#define MAX_STACK_ALLOC_SIZE 1024*1024
+//up to 64kb is allocated on the stack, above is allocated on the heap
+#define MAX_STACK_ALLOC_SIZE 1024*64
 
 #ifdef _DEBUG
 
@@ -34,6 +34,13 @@
 namespace sm {
 template<class T, class Enable = void>
 class array final {
+
+   //prevent heap alloc
+   static void *operator new     (size_t) = delete;
+   static void *operator new[](size_t) = delete;
+   static void  operator delete  (void*) = delete;
+   static void  operator delete[](void*) = delete;
+
 public:
    INLINE array(const size_t size)
       :
@@ -130,6 +137,13 @@ private:
 
 template<class T>
 class array<T, typename std::enable_if<std::is_fundamental<T>::value>::type> final {
+
+   //prevent heap alloc
+   static void *operator new     (size_t) = delete;
+   static void *operator new[](size_t) = delete;
+   static void  operator delete  (void*) = delete;
+   static void  operator delete[](void*) = delete;
+
 public:
    INLINE array(const size_t size)
       :

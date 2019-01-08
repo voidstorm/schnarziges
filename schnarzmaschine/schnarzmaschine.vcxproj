@@ -27,6 +27,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\sm\api.h" />
+    <ClInclude Include="include\sm\array.hpp" />
     <ClInclude Include="include\sm\command_queue.hpp" />
     <ClInclude Include="include\sm\functional.hpp" />
     <ClInclude Include="include\sm\game.h" />
@@ -40,7 +41,6 @@
     <ClInclude Include="include\sm\scoped_timer.hpp" />
     <ClInclude Include="include\sm\scoped_wait_timer.hpp" />
     <ClInclude Include="include\sm\shared_string_view.hpp" />
-    <ClInclude Include="include\sm\stack_container.hpp" />
     <ClInclude Include="include\sm\system_logger.hpp" />
     <ClInclude Include="include\sm\thread_context.hpp" />
     <ClInclude Include="src\base\targetver.h" />
