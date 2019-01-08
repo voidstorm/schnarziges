@@ -12,14 +12,14 @@ namespace sm
             :
             m_size(size)
         {
-            T* m_data = (T*)_malloca(sizeof(T) * m_size + 1);	//alloca will create chunk on the stack
+           m_data = (T*)_malloca(sizeof(T) * m_size + 1);	//alloca will create chunk on the stack
         }
 
         INLINE array(std::initializer_list<T> l)
             :
             m_size(l.size())
         {
-            T* m_data = (T*)_malloca(sizeof(T) * m_size + 1);
+            m_data = (T*)_malloca(sizeof(T) * m_size + 1);
             std::copy(l.begin(), l.end(), this->begin());
         }
 
@@ -27,7 +27,7 @@ namespace sm
             :
             m_size(other.m_size)
         {
-            T* m_data = (T*)_malloca(sizeof(T) * m_size + 1);
+            m_data = (T*)_malloca(sizeof(T) * m_size + 1);
             memcpy(m_data, other.m_data, sizeof(T) * m_size);
         }
 
@@ -42,20 +42,20 @@ namespace sm
         INLINE array& operator=(const array<T> &other)
         {
             m_size = other.m_size;
-            T* m_data = (T*)_malloca(sizeof(T) * m_size + 1);
+            m_data = (T*)_malloca(sizeof(T) * m_size + 1);
             memcpy(m_data, other.m_data, sizeof(T) * m_size);
         }
 
         INLINE array& operator=(std::initializer_list<T> other)
         {
             m_size = other.m_size;
-            T* m_data = (T*)_malloca(sizeof(T) * m_size + 1);
+            m_data = (T*)_malloca(sizeof(T) * m_size + 1);
             std::copy(other.begin(), other.end(), begin());
         }
 
         INLINE ~array()
         {
-            //nothing to do here, stack based
+            _freea(m_data);
         }
 
         INLINE T* const data() const
@@ -85,7 +85,7 @@ namespace sm
 
         INLINE T* begin()
         {
-            return m_data;
+            return &(m_data[0]);
         }
 
         INLINE T* end()
