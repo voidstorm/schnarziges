@@ -2,7 +2,17 @@
 #include <malloc.h>
 #include <type_traits>
 #include <cassert>
+#include <limits>
 #include "api.h"
+
+#ifdef max 
+#undef max
+#endif
+
+#ifdef min 
+#undef min
+#endif
+
 
 //up to 64kb is allocated on the stack, above is allocated on the heap
 #define MAX_STACK_ALLOC_SIZE 1024*64
@@ -42,9 +52,10 @@ class array final {
    static void  operator delete[](void*) = delete;
 
 public:
-   INLINE array(const size_t size)
+   INLINE array(const uint32_t size)
       :
       m_size(size) {
+      assert(size <= std::numeric_limits<uint32_t>().max());
       m_data = (T*)sm_stack_alloc(sizeof(T) * m_size + ALIGNMENT + 1);	//alloca will create chunk on the stack
       m_aligned_data = (T*)(((UINT_PTR)m_data + (ALIGNMENT - 1)) & ~(ALIGNMENT - 1));
       m_aligned_data = new(m_data) T();
@@ -52,7 +63,7 @@ public:
 
    INLINE array(std::initializer_list<T> l)
       :
-      m_size(l.size()) {
+      m_size((uint32_t)l.size()) {
       m_data = (T*)sm_stack_alloc(sizeof(T) * m_size + ALIGNMENT + 1);	//alloca will create chunk on the stack
       m_aligned_data = (T*)(((UINT_PTR)m_data + (ALIGNMENT - 1)) & ~(ALIGNMENT - 1));
       m_aligned_data = new(m_data) T();
@@ -106,17 +117,17 @@ public:
       return m_aligned_data;
    }
 
-   INLINE T& operator[](const size_t idx) const {
+   INLINE T& operator[](const uint32_t idx) const {
       assert(idx < m_size);
       return m_aligned_data[idx];
    }
 
-   INLINE T& operator[](const size_t idx) {
+   INLINE T& operator[](const uint32_t idx) {
       assert(idx < m_size);
       return m_aligned_data[idx];
    }
 
-   INLINE size_t size() const {
+   INLINE uint32_t size() const {
       return m_size;
    }
 
@@ -138,7 +149,7 @@ public:
 
 
 private:
-   const size_t m_size;
+   const uint32_t m_size;
    T *m_aligned_data;
    T *m_data;
 };
@@ -153,17 +164,19 @@ class array<T, ALIGNMENT, typename std::enable_if<std::is_fundamental<T>::value>
    static void  operator delete[](void*) = delete;
 
 public:
-   INLINE array(const size_t size)
+   INLINE array(const uint32_t size)
       :
       m_size(size) {
+      assert(size <= std::numeric_limits<uint32_t>().max());
       m_data = (T*)sm_stack_alloc(sizeof(T) * m_size + ALIGNMENT + 1);	//alloca will create chunk on the stack
       m_aligned_data = (T*)(((UINT_PTR)m_data + (ALIGNMENT - 1)) & ~(ALIGNMENT - 1));
 
    }
 
-   INLINE array(const size_t size, const T init_value)
+   INLINE array(const uint32_t size, const T init_value)
       :
       m_size(size) {
+      assert(size <= std::numeric_limits<uint32_t>().max());
       m_data = (T*)sm_stack_alloc(sizeof(T) * m_size + ALIGNMENT + 1);	//alloca will create chunk on the stack
       m_aligned_data = (T*)(((UINT_PTR)m_data + (ALIGNMENT - 1)) & ~(ALIGNMENT - 1));
       std::fill(begin(), end(), init_value);
@@ -171,7 +184,7 @@ public:
 
    INLINE array(std::initializer_list<T> l)
       :
-      m_size(l.size()) {
+      m_size((uint32_t)l.size()) {
       m_data = (T*)sm_stack_alloc(sizeof(T) * m_size + ALIGNMENT + 1);	//alloca will create chunk on the stack
       m_aligned_data = (T*)(((UINT_PTR)m_data + (ALIGNMENT - 1)) & ~(ALIGNMENT - 1));
       std::copy(l.begin(), l.end(), this->begin());
@@ -220,17 +233,17 @@ public:
       return m_aligned_data;
    }
 
-   INLINE T& operator[](const size_t idx) const {
+   INLINE T& operator[](const uint32_t idx) const {
       assert(idx < m_size);
       return m_aligned_data[idx];
    }
 
-   INLINE T& operator[](const size_t idx) {
+   INLINE T& operator[](const uint32_t idx) {
       assert(idx < m_size);
       return m_aligned_data[idx];
    }
 
-   INLINE size_t size() const {
+   INLINE uint32_t size() const {
       return m_size;
    }
 
@@ -252,7 +265,7 @@ public:
 
 
 private:
-   const size_t m_size;
+   const uint32_t m_size;
    T *m_aligned_data;
    T *m_data;
 };
