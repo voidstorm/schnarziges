@@ -28,13 +28,13 @@
 //--------------------------------------DEBUG SETTINGS---------------------------------
 
 #ifdef _DEBUG
-//MEMCHECK MACRO
-#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-#include <crtdbg.h>
-#define DEBUG_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__)
-#define new DEBUG_NEW
-#define VT_DO_LEAK_CHECK _CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF)
+////MEMCHECK MACRO
+//#define _CRTDBG_MAP_ALLOC
+//#include <stdlib.h>
+//#include <crtdbg.h>
+//#define DEBUG_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__)
+//#define new DEBUG_NEW
+//#define VT_DO_LEAK_CHECK _CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF)
 
 
 //VERBOSE

@@ -1,7 +1,9 @@
 #pragma once
 #include <malloc.h>
 #include <type_traits>
+#include <cassert>
 #include "api.h"
+
 
 #define MAX_STACK_ALLOC_SIZE 1024*1024
 
@@ -26,6 +28,8 @@
             : NULL)
 
 #endif
+
+
 
 namespace sm {
 template<class T, class Enable = void>
@@ -89,10 +93,12 @@ public:
    }
 
    INLINE T& operator[](const size_t idx) const {
+      assert(idx < m_size);
       return m_data[idx];
    }
 
    INLINE T& operator[](const size_t idx) {
+      assert(idx < m_size);
       return m_data[idx];
    }
 
@@ -129,6 +135,13 @@ public:
       :
       m_size(size) {
       m_data = (T*)sm_stack_alloc(sizeof(T) * m_size + 1);	//alloca will create chunk on the stack
+   }
+
+   INLINE array(const size_t size, const T init_value)
+      :
+      m_size(size) {
+      m_data = (T*)sm_stack_alloc(sizeof(T) * m_size + 1);	//alloca will create chunk on the stack
+      std::fill(begin(), end(), init_value);
    }
 
    INLINE array(std::initializer_list<T> l)
@@ -177,10 +190,12 @@ public:
    }
 
    INLINE T& operator[](const size_t idx) const {
+      assert(idx < m_size);
       return m_data[idx];
    }
 
    INLINE T& operator[](const size_t idx) {
+      assert(idx < m_size);
       return m_data[idx];
    }
 
