@@ -51,47 +51,45 @@ class array final {
    static void  operator delete  (void*) = delete;
    static void  operator delete[](void*) = delete;
 
+private:
+    INLINE void alloc_aligned(const uint32_t size)
+    {
+        m_data = (T*)sm_stack_alloc(sizeof(T) * m_size + ALIGNMENT + 1);	//alloca will create chunk on the stack
+        m_aligned_data = (T*)(((UINT_PTR)m_data + (ALIGNMENT - 1)) & ~(ALIGNMENT - 1));
+        m_aligned_data = new(m_data) T();
+    }
+
 public:
    INLINE array(const uint32_t size)
       :
       m_size(size) {
       assert(size <= std::numeric_limits<uint32_t>().max());
-      m_data = (T*)sm_stack_alloc(sizeof(T) * m_size + ALIGNMENT + 1);	//alloca will create chunk on the stack
-      m_aligned_data = (T*)(((UINT_PTR)m_data + (ALIGNMENT - 1)) & ~(ALIGNMENT - 1));
-      m_aligned_data = new(m_data) T();
+      alloc_aligned(size);
    }
 
    INLINE array(std::initializer_list<T> l)
       :
       m_size((uint32_t)l.size()) {
-      m_data = (T*)sm_stack_alloc(sizeof(T) * m_size + ALIGNMENT + 1);	//alloca will create chunk on the stack
-      m_aligned_data = (T*)(((UINT_PTR)m_data + (ALIGNMENT - 1)) & ~(ALIGNMENT - 1));
-      m_aligned_data = new(m_data) T();
-      std::copy(l.begin(), l.end(), this->begin());
+       alloc_aligned(m_size);
+       std::copy(l.begin(), l.end(), this->begin());
    }
 
    INLINE array(const array<typename T> &other)
       :
       m_size(other.m_size) {
-      m_data = (T*)sm_stack_alloc(sizeof(T) * m_size + ALIGNMENT + 1);	//alloca will create chunk on the stack
-      m_aligned_data = (T*)(((UINT_PTR)m_data + (ALIGNMENT - 1)) & ~(ALIGNMENT - 1));
-      m_aligned_data = new(m_data) T();
-      memcpy(m_aligned_data, other.m_aligned_data, sizeof(T) * m_size);
+       alloc_aligned(m_size);
+       memcpy(m_aligned_data, other.m_aligned_data, sizeof(T) * m_size);
    }
 
    INLINE array& operator=(const array<typename T> &other) {
       m_size = other.m_size;
-      m_data = (T*)sm_stack_alloc(sizeof(T) * m_size + ALIGNMENT + 1);	//alloca will create chunk on the stack
-      m_aligned_data = (T*)(((UINT_PTR)m_data + (ALIGNMENT - 1)) & ~(ALIGNMENT - 1));
-      m_aligned_data = new(m_data) T();
+      alloc_aligned(m_size);
       memcpy(m_aligned_data, other.m_aligned_data, sizeof(T) * m_size);
    }
 
    INLINE array& operator=(std::initializer_list<T> other) {
       m_size = other.m_size;
-      m_data = (T*)sm_stack_alloc(sizeof(T) * m_size + ALIGNMENT + 1);	//alloca will create chunk on the stack
-      m_aligned_data = (T*)(((UINT_PTR)m_data + (ALIGNMENT - 1)) & ~(ALIGNMENT - 1));
-      m_aligned_data = new(m_data) T();
+      alloc_aligned(m_size);
       std::copy(other.begin(), other.end(), begin());
    }
 
@@ -163,52 +161,52 @@ class array<T, ALIGNMENT, typename std::enable_if<std::is_fundamental<T>::value>
    static void  operator delete  (void*) = delete;
    static void  operator delete[](void*) = delete;
 
+private:
+   INLINE void alloc_aligned(const uint32_t size)
+   {
+       m_data = (T*)sm_stack_alloc(sizeof(T) * m_size + ALIGNMENT + 1);	//alloca will create chunk on the stack
+       m_aligned_data = (T*)(((UINT_PTR)m_data + (ALIGNMENT - 1)) & ~(ALIGNMENT - 1));
+   }
+
 public:
    INLINE array(const uint32_t size)
       :
       m_size(size) {
       assert(size <= std::numeric_limits<uint32_t>().max());
-      m_data = (T*)sm_stack_alloc(sizeof(T) * m_size + ALIGNMENT + 1);	//alloca will create chunk on the stack
-      m_aligned_data = (T*)(((UINT_PTR)m_data + (ALIGNMENT - 1)) & ~(ALIGNMENT - 1));
-
+      alloc_aligned(size);
    }
 
    INLINE array(const uint32_t size, const T init_value)
       :
       m_size(size) {
       assert(size <= std::numeric_limits<uint32_t>().max());
-      m_data = (T*)sm_stack_alloc(sizeof(T) * m_size + ALIGNMENT + 1);	//alloca will create chunk on the stack
-      m_aligned_data = (T*)(((UINT_PTR)m_data + (ALIGNMENT - 1)) & ~(ALIGNMENT - 1));
+      alloc_aligned(m_size);
       std::fill(begin(), end(), init_value);
    }
 
    INLINE array(std::initializer_list<T> l)
       :
       m_size((uint32_t)l.size()) {
-      m_data = (T*)sm_stack_alloc(sizeof(T) * m_size + ALIGNMENT + 1);	//alloca will create chunk on the stack
-      m_aligned_data = (T*)(((UINT_PTR)m_data + (ALIGNMENT - 1)) & ~(ALIGNMENT - 1));
-      std::copy(l.begin(), l.end(), this->begin());
+       alloc_aligned(m_size);
+       std::copy(l.begin(), l.end(), this->begin());
    }
 
    INLINE array(const array<typename T> &other)
       :
       m_size(other.m_size) {
-      m_data = (T*)sm_stack_alloc(sizeof(T) * m_size + ALIGNMENT + 1);	//alloca will create chunk on the stack
-      m_aligned_data = (T*)(((UINT_PTR)m_data + (ALIGNMENT - 1)) & ~(ALIGNMENT - 1));
-      memcpy(m_aligned_data, other.m_aligned_data, sizeof(T) * m_size);
+       alloc_aligned(m_size);
+       memcpy(m_aligned_data, other.m_aligned_data, sizeof(T) * m_size);
    }
 
    INLINE array& operator=(const array<typename T> &other) {
       m_size = other.m_size;
-      m_data = (T*)sm_stack_alloc(sizeof(T) * m_size + ALIGNMENT + 1);	//alloca will create chunk on the stack
-      m_aligned_data = (T*)(((UINT_PTR)m_data + (ALIGNMENT - 1)) & ~(ALIGNMENT - 1));
+      alloc_aligned(m_size);
       memcpy(m_aligned_data, other.m_aligned_data, sizeof(T) * m_size);
    }
 
    INLINE array& operator=(std::initializer_list<T> other) {
       m_size = other.m_size;
-      m_data = (T*)sm_stack_alloc(sizeof(T) * m_size + ALIGNMENT + 1);	//alloca will create chunk on the stack
-      m_aligned_data = (T*)(((UINT_PTR)m_data + (ALIGNMENT - 1)) & ~(ALIGNMENT - 1));
+      alloc_aligned(m_size);
       std::copy(other.begin(), other.end(), begin());
    }
 
