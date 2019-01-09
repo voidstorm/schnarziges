@@ -38,10 +38,13 @@ public:
       using type = std::vector<typename QueueTask::type>;
    };
 
-   struct StaticCommandBuffer {
-      template<size_t SIZE> using type = std::array<typename QueueTask::type, SIZE>;
-   };
+   //struct StaticCommandBuffer {
+   //   template<size_t SIZE> using type = std::array<typename QueueTask::type, SIZE>;
+   //};
 
+   struct StaticCommandBuffer {
+      template<size_t SIZE> using type = typename QueueTask::type[SIZE];
+   };
    //---------------------------------------------------------------------------------------
    CommandQueue() {
       m_waiting_for_work.test_and_set(std::memory_order_acquire);
@@ -61,8 +64,25 @@ public:
 
    //---------------------------------------------------------------------------------------
    //this is a sink function
+   //template<size_t SIZE>
+   //INLINE auto submit(std::array<typename QueueTask::type, SIZE> &&tasks)->std::array<std::future<Rt>, SIZE> {
+   //   std::array<std::future<Rt>, SIZE> fs;
+   //   int i = 0;
+   //   for (auto& item : tasks) {
+   //      fs[i] = std::move(item.get_future());
+   //      ++i;
+   //   }
+   //   while (m_busy.test_and_set(std::memory_order_acquire));
+   //   m_commands_push->insert(m_commands_push->end(), std::make_move_iterator(std::begin(tasks)), std::make_move_iterator(std::end(tasks)));
+   //   m_waiting_for_work.clear(std::memory_order_release);
+   //   m_busy.clear(std::memory_order_release);
+   //   return std::move(fs);
+   //}
+
+   //---------------------------------------------------------------------------------------
+   //this is a sink function
    template<size_t SIZE>
-   INLINE auto submit(std::array<typename QueueTask::type, SIZE> &&tasks)->std::array<std::future<Rt>, SIZE> {
+   INLINE auto submit(typename QueueTask::type (&&tasks)[SIZE])->std::array<std::future<Rt>, SIZE> {
       std::array<std::future<Rt>, SIZE> fs;
       int i = 0;
       for (auto& item : tasks) {
