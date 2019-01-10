@@ -71,7 +71,7 @@ public:
       :
       m_size((uint32_t)l.size()) {
        alloc_aligned(m_size);
-       std::copy(l.begin(), l.end(), this->begin());
+       std::copy(l.begin(), l.end(), begin());
    }
 
    INLINE array(const array<typename T> &other)

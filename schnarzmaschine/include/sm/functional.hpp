@@ -13,21 +13,27 @@
 
 //curry/partial function application
 
+
+namespace sm
+{
+    template <typename C>
+    struct get_template_type;
+
+    template <template <typename > class C, typename T>
+    struct get_template_type<C<T>>
+    {
+        using type = T;
+    };
+
+    template <typename E>
+    constexpr auto enum_cast(E e) noexcept
+    {
+        return static_cast<std::underlying_type_t<E>>(e);
+    }
+}
+
 namespace sm::fn {
 
-template <typename C>
-struct get_template_type;
-
-template <template <typename > class C, typename T>
-struct get_template_type<C<T>> {
-   using type = T;
-};
-
-template <typename E>
-constexpr auto enum_cast(E e) noexcept
-{
-    return static_cast<std::underlying_type_t<E>>(e);
-}
    
 template<typename Function, typename... Arguments>
 INLINE constexpr auto partial(Function &&func, Arguments&&... args) {
