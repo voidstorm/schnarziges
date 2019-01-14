@@ -37,3 +37,6 @@
 [submodule "3rdparty/game++"]
 	path = 3rdparty/game++
 	url = https://github.com/voidstorm/gamepp.git
+[submodule "3rdparty/immer"]
+	path = 3rdparty/immer
+	url = https://github.com/arximboldi/immer.git
