@@ -3,7 +3,7 @@
 #include <iostream>
 #include "sm/system_logger.hpp"
 
-using namespace sm::fn;
+using namespace sm;
 
 namespace detail {
 INLINE void attach_callbacks(GLFWwindow* window, sm::app::AppCallbackInfo callbacks) {

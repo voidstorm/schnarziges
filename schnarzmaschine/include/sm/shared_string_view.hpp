@@ -34,7 +34,7 @@ public:
       m_v(other.m_v) {
    }
 
-   shared_string_view(shared_string_view &&other)
+   shared_string_view(shared_string_view &&other) noexcept
       :
       m_s(std::move(other.m_s)),
       m_v(std::move(other.m_v)) {
