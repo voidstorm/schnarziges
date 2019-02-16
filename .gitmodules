@@ -40,3 +40,6 @@
 [submodule "3rdparty/immer"]
 	path = 3rdparty/immer
 	url = https://github.com/arximboldi/immer.git
+[submodule "3rdparty/corelib"]
+	path = 3rdparty/corelib
+	url = https://github.com/voidstorm/corelib.git
